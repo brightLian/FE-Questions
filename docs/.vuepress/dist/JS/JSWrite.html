@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JS 手写代码 | BrightLian面试指南</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    
+    <meta name="description" content="连明亮面试题库">
+    
+    <link rel="preload" href="/assets/css/0.styles.775e5fee.css" as="style"><link rel="preload" href="/assets/js/app.4c8be87f.js" as="script"><link rel="preload" href="/assets/js/2.aca5b451.js" as="script"><link rel="preload" href="/assets/js/12.52c658e2.js" as="script"><link rel="prefetch" href="/assets/js/10.306c70dc.js"><link rel="prefetch" href="/assets/js/11.e19768bc.js"><link rel="prefetch" href="/assets/js/13.12f0b0a1.js"><link rel="prefetch" href="/assets/js/14.33085444.js"><link rel="prefetch" href="/assets/js/15.1cef569a.js"><link rel="prefetch" href="/assets/js/16.ae880d41.js"><link rel="prefetch" href="/assets/js/17.56b8aca4.js"><link rel="prefetch" href="/assets/js/18.246cf0de.js"><link rel="prefetch" href="/assets/js/19.f6213da4.js"><link rel="prefetch" href="/assets/js/20.92737203.js"><link rel="prefetch" href="/assets/js/21.74ba7446.js"><link rel="prefetch" href="/assets/js/22.d4868343.js"><link rel="prefetch" href="/assets/js/23.b6dd4b98.js"><link rel="prefetch" href="/assets/js/24.1d44c97f.js"><link rel="prefetch" href="/assets/js/25.3105fdfb.js"><link rel="prefetch" href="/assets/js/26.dddb9554.js"><link rel="prefetch" href="/assets/js/3.2a9e9d1d.js"><link rel="prefetch" href="/assets/js/4.5fcfcef7.js"><link rel="prefetch" href="/assets/js/5.1aaa2d2e.js"><link rel="prefetch" href="/assets/js/6.ffe6f60a.js"><link rel="prefetch" href="/assets/js/7.c843f252.js"><link rel="prefetch" href="/assets/js/8.b15ce6c1.js"><link rel="prefetch" href="/assets/js/9.e0b4c646.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.775e5fee.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/icon/favicon.png" alt="BrightLian面试指南" class="logo"> <span class="site-name can-hide">BrightLian面试指南</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/HTML/HTML.html" class="nav-link">
+  指南
+</a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/HTML/HTML.html" class="nav-link">
+  指南
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML 相关</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS 相关</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JS 相关</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/JS/JSBasicKnowledge.html" class="sidebar-link">JS 基础知识</a></li><li><a href="/JS/JSWrite.html" aria-current="page" class="active sidebar-link">JS 手写代码</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/JS/JSWrite.html#手写深拷贝" class="sidebar-link">手写深拷贝？</a></li><li class="sidebar-sub-header"><a href="/JS/JSWrite.html#手写深度比较" class="sidebar-link">手写深度比较</a></li></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>浏览器相关</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>DOM 相关</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>计算机基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端算法</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端框架</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>性能优化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端工程化</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>前端安全</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>node 相关</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>开放性问题</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="js-手写代码"><a href="#js-手写代码" class="header-anchor">#</a> JS 手写代码</h1> <h2 id="手写深拷贝"><a href="#手写深拷贝" class="header-anchor">#</a> 手写深拷贝？</h2> <ul><li>定义：完全拷贝一个新对象，修改其中一个不会影响另外一个。</li> <li>实现方式：JSON.parse(JSON.stringify(obj))但是引用循环会出现问题、递归方式逐一赋值。</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token comment">// 递归方式</span>
+<span class="token keyword">function</span> <span class="token function">deepClone</span><span class="token punctuation">(</span><span class="token parameter">obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> obj <span class="token operator">!==</span> <span class="token string">'object'</span> <span class="token operator">||</span> obj <span class="token operator">===</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> obj
+  <span class="token punctuation">}</span>
+  <span class="token keyword">let</span> result<span class="token punctuation">;</span>
+  <span class="token comment">// 现需要类型判断</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">'[object Array]'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    result <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> key <span class="token keyword">in</span> obj<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>obj<span class="token punctuation">.</span><span class="token function">hasOwnProperty</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      result<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">deepClone</span><span class="token punctuation">(</span>obj<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 注意深层嵌套情况</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="手写深度比较"><a href="#手写深度比较" class="header-anchor">#</a> 手写深度比较</h2> <ul><li>定义：对象（包括对象和数组）的比较是指针的比较，深度比较是不对指针进行比较而对对象的属性进行比较，不会考虑函数。</li></ul> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">const</span> obj1 <span class="token operator">=</span> <span class="token punctuation">{</span>
+  a<span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+  b<span class="token operator">:</span> <span class="token punctuation">{</span>
+    b1<span class="token operator">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    c1<span class="token operator">:</span> <span class="token number">200</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> obj2 <span class="token operator">=</span> <span class="token punctuation">{</span>
+  a<span class="token operator">:</span> <span class="token number">100</span><span class="token punctuation">,</span>
+  b<span class="token operator">:</span> <span class="token punctuation">{</span>
+    b1<span class="token operator">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+    c1<span class="token operator">:</span> <span class="token number">200</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj1 <span class="token operator">===</span> obj2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// false 因为是对指针的比较，所以 obj1 !== obj2</span>
+<span class="token keyword">function</span> <span class="token function">isObject</span><span class="token punctuation">(</span><span class="token parameter">obj</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">typeof</span> obj <span class="token operator">===</span> <span class="token string">'object'</span> <span class="token operator">&amp;&amp;</span> obj <span class="token operator">!==</span> <span class="token keyword">null</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">isEqual</span><span class="token punctuation">(</span><span class="token parameter">obj1<span class="token punctuation">,</span> obj2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 如果不是对象或者数组，进行值类型的比较</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isObject</span><span class="token punctuation">(</span>obj1<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token operator">!</span><span class="token function">isObject</span><span class="token punctuation">(</span>obj2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> obj1 <span class="token operator">===</span> obj2
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 如果是浅拷贝直接返回true</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>obj1 <span class="token operator">===</span> obj2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">const</span> obj1Keys <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> obj2Keys <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>obj2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// 如果key不同直接返回false</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>obj1Keys <span class="token operator">!==</span> obj2Keys<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token boolean">false</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 循环调用key判断值</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> key <span class="token keyword">in</span> obj1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">isEqual</span><span class="token punctuation">(</span>obj1<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">,</span> obj2<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>res<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">isEqual</span><span class="token punctuation">(</span>obj1<span class="token punctuation">,</span> obj2<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// true key-value 相同即可。</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/JS/JSBasicKnowledge.html" class="prev">
+        JS 基础知识
+      </a></span> <span class="next"><a href="/browser/browserBasicKnowledge.html">
+        浏览器相关
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.4c8be87f.js" defer></script><script src="/assets/js/2.aca5b451.js" defer></script><script src="/assets/js/12.52c658e2.js" defer></script>
+  </body>
+</html>
