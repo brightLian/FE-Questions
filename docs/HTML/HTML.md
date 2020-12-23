@@ -24,7 +24,7 @@
 是 HTML 的数据属性，用来将数据存储于标准的 HTML 中作为额外的信息，我们可以通过 js 来访问它。
 
 ## H5的新特性有哪些？:star2:
-- **标签相关：** 新增了一些语义化的标签，废除了一些表现形式的标签。
+- **标签相关：** 新增了一些语义化的标签（article、section、header 等），废除了一些表现形式的标签（i、u、tt 等）。
 - **存储相关：** 新增了前端存储方式，包括 localStorage、sessionStorage、IndexedDB 等。
 - **新增 API：** canvas、拖放、地理定位、音视频相关功能、webSocket 等。
 

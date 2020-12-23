@@ -22,19 +22,20 @@
 - 写百分比，则继承计算出来的值（如200%）
 
 ## 伪类和伪元素是什么？
-伪类是真实存在的，伪元素是在原有元素上添加的。
+伪类是真实存在的，伪元素是在原有元素上添加的，两者的使用可以在一定程度上避免使用 JS 来控制样式。
 - **伪类：**
 	- 定义：以一个冒号作为前缀，被添加到一个选择器末尾的字段，当你希望样式在特定状态下才被呈现到指定元素时使用。
 	- 常用包括：hover、focus、first-child、nth-child 等。
 - **伪元素：**
 	- 定义：用于创建一些不存在文档树中的元素，并为其添加样式，虽然用户可以看到这些内容，但是在实际的文档中并不存在。
-	- 常用包括：before、after等。
+	- 常用包括：before、after、first-letter等。
 
 ## em、px、rem 等单位的区别？:star2:
 - px：绝对单位，精确的像素。
-- em：相对单位，如果自身设置了 font-size 时，1em = font-size 的值；自身未设置时为最近祖先元素的。
+- em：相对单位，如果自身设置了 font-size 时，1em = font-size 的值；自身未设置时为最近祖先元素的 font-size。
 - rem：相对单位，相对于根结点 html 的 font-size。
 - vw/vh：相对单位，1vw = 视口宽度的1%；1vh = 视口高度的1%。
+- rpx：微信小程序提供的单位，为微信小程序提供了自适应的功能。
 
 ## CSS 的定位方式？
 position 有以下属性：
@@ -114,9 +115,11 @@ position 有以下属性：
 - **类型：** 在 web 应用开发时通常会用到 screen （屏幕）类型，有时调用打印机时会用到 print 类型。
 
 ## 对 flex 布局的理解以及常用属性？:star2:
-- **理解：** 目前的 web 应用有不同的设备和分辨率，这时需要响应式的页面设计来满足复杂的布局要求。flex 布局的优势在于我们只需要声明布局应该具有的行为，而不需要给出具体的实现方案，浏览器负责完成布局。当布局涉及到不定宽度，各种对齐等场景时，可以优先使用 flex 布局。
+- **理解：** 目前的 web 应用有不同的设备和分辨率，这时需要响应式的页面设计来满足复杂的布局要求。
+flex 布局的优势在于我们只需要声明布局应该具有的行为，而不需要给出具体的实现方案，浏览器负责完成布局。
+当布局涉及到不定宽度，各种对齐等场景时，可以优先使用 flex 布局。
 - **容器属性：**
-	- flex-direction：确定主轴方向。（row | row-reverse | column | cloumn-reverse）
+	- flex-direction：确定主轴方向。（row | row-reverse | column | column-reverse）
 	- flex-wrap：确定换行方式。（nowrap | wrap | wrap-reverse）
 	- flex-flow：上面两个属性的结合，默认值为 row nowrap。
 	- justify-content：确定主轴上的对齐方式。（flex-start | flex-end | center | space-between | space-around）
@@ -203,8 +206,8 @@ position 有以下属性：
 	- opacity：透明度
 
 ## 介绍 requestAnimationFrame
-功能：用来实现动画持久化。
-- 要想动画流畅，更新频率要60帧/s，即16.67ms 更新一次视图
+功能：用来实现动画持久化。要求浏览器在下次重绘之前调用指定的回调函数更新动画。
+- 要想动画流畅，更新频率要60帧/s，即16.67ms 更新一次视图ww
 - setTimeout 要手动控制频率，而 RAF 浏览器会自动控制
 - 后台标签或隐藏 iframe 中，RAF 会暂停，而 setTimeout 依然执行
 

@@ -21,7 +21,7 @@
 
 ## 如何判断是否是数组，以及各个方法的优劣势？:star2:
 - instanceof：
-	- 通过检测构造函数的 prototype 属性是否出现在实例对象的原型链。
+	- 通过检测构造函数的 prototype 属性是否出现在实例对象的原型链上。（右操作数的显示原型是否出现在左操作数的原型链上）
 	- instanceof 只能用来判断对象类型，基本类型不可以使用。
 	- 所有的对象类型 instanceof Object 都是 true。
 - Object.prototype.toString.call()：

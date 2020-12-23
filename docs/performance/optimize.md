@@ -10,7 +10,7 @@
 	- 减少访问次数：合并代码、SSR、缓存
 		- 非 SSR：先加载网页，再加载数据，再渲染数据。
 	- 使用更加的网络：CDN
-- 让渲染更快
+- 让渲染更快ww
 	- CSS 放在 head，JS 放在 body 最下边
 	- 尽早执行 JS，用 DOMContentLoaded 触发
 	- 懒加载 
@@ -44,3 +44,5 @@
 - 解决方案1：
 	- clientTop，offsetTop，clientHeight 以及 scrollTop 各种关于图片的高度作比对
   - 首先设置一个临时属性 data-src，控制加载时使用 src 代替 data-src
+
+## 你做过哪些性能优化来提升用户体验？

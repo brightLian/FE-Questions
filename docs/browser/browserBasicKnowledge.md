@@ -26,7 +26,7 @@
 - DOMContentLoaded 在 DOM 渲染完即可执行，此时图片、视频还可能没加载完。（也称 document ready 时期）
 
 ## 什么是同源策略及限制？
-- 同源策略：ajax 请求时，浏览器要求当前网页和 server 必须同源。
+- 同源策略：用于限制一个源的文档或者加载的脚本是否可以和另一个源进行交互。
 - 同源：协议 + 域名 + 端口都相同的情况下就是同源。
 - 限制：当发起请求的源与请求的资源不同时，会出现跨域问题。
 
@@ -38,9 +38,20 @@
 - CORS：
 	- 利用 Access-Control-xxx-xxx 设置允许跨域的域名、方法等
 	- 需要服务端设置 http header
-- Proxy：
+- Server Proxy：
 	- 利用 Nginx 的反向代理功能 
 	- 客户端先请求不跨域等域名 aaa.com，然后 Nginx 作为服务器反向代理转发给 bbb.com
+
+## 跨域时如何处理 cookie？
+跨域如果需要携带 cookie 时，需要前后端两方同时处理。
+- 服务端：设置相应的 header。
+	- Access-Control-Allow-Credentials: true
+	- Access-Control-Allow-Origin: "https://xxx.com"
+	- Access-Control-Allow-Methods: *
+	- Access-Control-Allow-Headers: \["Content-Type", "Authorization", "Accept"\]
+- 前端需要在请求时设置
+  - xhr.withCredentials = true;
+同时服务端的 Access-Control-Allow-Origin 不能设置为 *
 
 ## JSONP 原理？为什么不是真正的 ajax？:star2:
 - 原理：动态创建 script 标签，基于回调函数。但是只能发送 GET 请求。

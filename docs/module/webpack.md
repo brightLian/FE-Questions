@@ -12,6 +12,7 @@
 - style-loader：将模块的导出作为样式添加到 DOM 中。
 - file-loader：将文件打包到输出文件夹。（常用于处理图片）
 - url-loader：将文件打包到输出文件夹，但是存在大小限制。
+- image-loader：加载并压缩图片文件。
 loader 的执行顺序是从后往前的
 
 ## webpack 中常见的 plugin 有哪些？:star2:
@@ -38,7 +39,34 @@ loader 的执行顺序是从后往前的
 - module：是开发中的单个模块，各个源码文件。
 
 ## webpack 如何抽离公共代码？:star2: TODO
-通过 splitChunks 分组
+webpack4 之后内置 splitChunks 插件，专门用于抽离公共代码。
+```javascript
+module.exports = {
+  mode: 'production',
+  optimization: {
+    //分割代码快
+    splitChunks: {
+      // 缓存组
+      cacheGroups: {
+        // 公共模块
+        common: {
+          name: "commons", // 抽离出来的模块名
+          chunks: 'initial', // 从入口开始抽离
+          minSize: 0, // 大小大于0字节的时候需要抽离出来
+          minChunks: 2 //重复2次使用的时候需要抽离出来
+        },
+        vendor: {
+          priority: 1,// 添加权重
+          test: /node_modules/, // 把这个目录下符合下面几个条件的库抽离出来
+          chunks: 'initial', // 刚开始就要抽离
+          minSize: 0,
+          minChunks: 2,
+        }
+      }
+    }
+  },
+}
+```
 
 ## webpack 如何实现动态加载？
 webpack 默认支持动态加载。需要异步加载的内容只需要使用以下语法即可。（和 Vue 异步组件、Vue-Router 异步加载路由引入方式相同）
@@ -50,10 +78,18 @@ import('./xxx').then(res => {
 ```
 
 ## webpack 的构建流程？
+- 解析并合并 webpack.config.js 文件中配置的参数，生成最后的结果。
+- 注册所有的配置插件，让插件能监听到 webpack 整体的构建过程。
+- 根据 entry 配置的入口文件，逐层识别模块依赖，构建生成 AST 语法树。
+- 根据文件类型和 loader 配置找出合适的 loader 用来对文件进行转换。
+- 转换后得到最终结果，根据配置生成 chunks。
+- 输出最后所有的 chunks 到文件系统。
 
 ## webpack 的热更新是如何实现的？
+webpack 的热更新依赖于 HotModuleReplacementPlugin 插件配置
 
 ## webpack 如何优化前端性能？:star2:
+实际就是如何提高 webpack 的构建速度和 webpack 如何优化产出代码，两者结合。
 
 ## 如何提高 webpack 的构建速度？:star2:
 - 生产环境：
