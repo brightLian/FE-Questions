@@ -27,7 +27,6 @@ console.log(obj); // 我们会发现 num 没有被改变，但是 innerObj.name 
 ```javascript
 function deepFreeze(obj) {
   const propNames = Object.getOwnPropertyNames(obj);
-  console.log(propNames)
   for (const name of propNames) {
     const value = obj[name];
     if (typeof value === 'object' && value !== null) {
@@ -42,6 +41,7 @@ const obj = {
     name: 'lml'
   } 
 };
+
 deepFreeze(obj);
 obj.num = 2;
 obj.innerObj.name = 'xxs';
@@ -52,7 +52,19 @@ console.log(obj); // 这时候我们发现嵌套对象也不可改变了。
 定义：在一个函数中，首先填充几个参数，然后再返回一个新的函数的技术，称为函数的柯里化。    
 作用：函数柯里化的主要作用和特点就是参数复用、提前返回和延迟执行。
 ```javascript
-// TODO 实现
+const curry = fn => {
+  if (typeof fn !== "function") {
+    throw Error("No function provided");
+  }
+  return function curriedFn(...args) {
+    if (args.length < fn.length) {
+      return function() {
+        return curriedFn.apply(null, args.concat([].slice.call(arguments)));
+      };
+    }
+    return fn.apply(null, args);
+  };
+};
 ```
 
 ## 函数节流和函数防抖是什么？:star2:
@@ -67,10 +79,8 @@ console.log(obj); // 这时候我们发现嵌套对象也不可改变了。
 // 节流
 function throttle(fn, interval = 500) {
   let timer = null;
-
   return (...args) => {
     if (timer) return false;
-    
     fn.apply(this, args);
     timer = setTimeout(() => {
       clearTimeout(timer);
@@ -81,7 +91,6 @@ function throttle(fn, interval = 500) {
 // 防抖
 function debounce(fn, interval = 500) {
   let timeout = null;
-  
   return function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -101,7 +110,7 @@ function debounce(fn, interval = 500) {
 	- Symbol 不能与其他类型进行计算。
 	- Symbol 作为属性名，不会被遍历，但是可以通过 Object.getOwnPropertySymbols 方法获取指定对象的所有 Symbol 属性名。
 
-## ES6Module 和 CommonJS 模块的异同点？
+## ES6Module 和 CommonJS 模块的异同点？:star2:
 - 模块化的作用：提高了项目的可维护、可拓展和可协作性。   
 - 使用场景：我们在浏览器中使用 ES6 的模块化支持，在 Node 中使用 CommonJS 的模块化支持。（webpack 中的 Tree-Shaking 只有 ES6Module 支持）
 - 区别： 
@@ -194,7 +203,7 @@ function debounce(fn, interval = 500) {
 - 新 AST 树通过 babel-generator 转换为 ES5 语法。
 
 ## babel 环境搭建和基本配置
-- .babelrc：
+- .babelrc：此文件用于配置转码规则和插件。
 - @babel/preset-env：满足大多数的 ES6+ 语法，是很多 babel-plugin 的集合。
 - babel-polyfill：满足大多数新 API（已经被弃用）
 	- babel-polyfill 是 core-js 和 regenerator 的集合。
@@ -243,7 +252,7 @@ function debounce(fn, interval = 500) {
 
 ## 观察者模式 VS 发布-订阅模式？
 观察者模式中主体和观察者是互相感知的，发布-订阅模式是借助第三方来实现调度的，发布者和订阅者之间互不感知
-- 发布-订阅模式就好像报社， 邮局和个人的关系，报纸的订阅和分发是由邮局来完成的。报社只负责将报纸发送给邮局。
 - 观察者模式就好像 个体奶农和个人的关系。奶农负责统计有多少人订了产品，所以个人都会有一个相同拿牛奶的方法。奶农有新奶了就负责调用这个方法。
+- 发布-订阅模式就好像报社， 邮局和个人的关系，报纸的订阅和分发是由邮局来完成的。报社只负责将报纸发送给邮局。
 ![观察者模式vs发布订阅模式](/image/observer.png)
 

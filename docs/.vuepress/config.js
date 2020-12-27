@@ -87,6 +87,8 @@ module.exports = {
                 sidebarDepth: 2,    // 侧边栏深度：可选的, 默认值是 1
                 children: [
                     '/algorithm/algorithm.md',
+                    '/algorithm/stack.md',
+                    '/algorithm/queue.md',
                 ]
             },
             {

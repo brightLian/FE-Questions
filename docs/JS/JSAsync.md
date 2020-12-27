@@ -4,7 +4,7 @@
 
 ## 前端使用异步的场景？
 - 网络请求：如发送 ajax 请求数据
-- 定时任务：如 setTimeOut
+- 定时任务：如 setTimeOut，setInterval
 
 ## 什么是回调地狱？
 因为接口、数据、函数之间的依赖关系，需要通过一层一层的嵌套回调。导致代码耦合、后续难以修改和维护，产生回调地狱。
@@ -18,7 +18,7 @@
 - 然后继续轮询查找
 
 ## node 的事件循环是什么？:star2:
-<font color='#DEA3DC' size=6>重点再看!!!</font>
+<font color='red' size=5 font-weight="bold">重点再看!!!</font>
 - node 也是单线程，相对浏览器多一个微任务 process.nextTick，一个宏任务 setImmediate。
 	- process.nextTick 的回调和 promise 的回调都是微任务，但是 process.nextTick 的回调会比 promise 的先执行
 	- setImmediate 是宏任务，但是和其他宏任务一起执行时得到的结果却是不确定的.
@@ -46,7 +46,6 @@ console.log(3);
 ```
 
 ## 为什么 setTimeout 和 setImmediate 执行顺序是不同的?
-<font color='#DEA3DC' size=6>重点再看!!!</font>
 ```javascript
 // 多次执行这段代码，会发现输出结果是不同的
 setTimeout(() => console.log(1));
@@ -74,6 +73,7 @@ fs.readFile('test.js', () => {
 他的执行过程是会先跳过 timers 阶段，回调直接进入 I/0 callback，然后向下执行，到了 check 阶段执行 setImmediate，然后才在下一次循环的 timers 执行 setTimeout。
 
 ## promise 的三种状态，如何变化？:star2:
+<font color='#DEA3DC' size=5>重点再看!!!</font>
 - 三种状态：
 	- pending：进行中的状态，还没有结果
 	- fulfilled：成功的状态
@@ -189,8 +189,10 @@ Promise.reject().catch(() => {
 - 劣势：
 	- 不支持异步并行，多个异步代码之间不存在依赖关系时，后者仍需要等待前者完成。
 	- 不支持异步竞速，多个接口有一个返回值时即认为完成请求。（类似 Promise.race() 方法。）
-- 何时选择使用 async/await：
-	- 要执行多个异步任务并且这些异步任务有前后依赖的关系。
+- 两者使用和场景：
+	- 要执行多个异步任务，并且这些异步任务有前后依赖的关系，使用 async/await。
+	- 要执行多个异步任务，但是这些异步任务没有依赖关系，使用 promise。
+	- 执行多个异步任务，同时某个异步任务又返回值即认为成功，使用 promise。
 
 ## Promise 构造函数是同步还是异步，then方法呢？
 promise构造函数是同步执行的，then 和 catch 方法是异步执行的
@@ -235,7 +237,7 @@ res1.then(data => {
 !(async function () {
   // await 相当于 Promise 的 then。
   const res2 = await fn1();
-  console.log(res2);
+  console.log(res2); // 100
 })();
 
 !(async function () {
@@ -271,7 +273,7 @@ try-catch 相关
 async function async1() {
   console.log('async1 start'); // 2
   await async2(); // 先执行 async2 再执行 await，后面的变为异步回调
-  console.log('async1 end'); // 6
+  console.log('async1 end'); // 7
 }
 
 async function async2() {
@@ -282,7 +284,7 @@ console.log('script start'); // 1
 
 // 宏任务的异步挂起，最后执行
 setTimeout(function () {
-  console.log('setTimeout') // 8
+  console.log('setTimeout') // 9
 });
 
 async1();
@@ -292,10 +294,14 @@ new Promise(function (resolve) {
   resolve();
   // Promise.then 后面的内容是异步微任务
 }).then(function () {
-  console.log('promise2'); // 7
+  console.log('promise2'); // 8
 });
 
 console.log('script end'); // 5
+
+process.nextTick(function() {
+  console.log('node nextTick') // 6
+})
 ```
 ```javascript
 async function async1() {
@@ -318,11 +324,13 @@ console.log('script start'); // 1
 // 立即执行
 async1();
 console.log('script end'); // 4
+
+
 ```
 
 ## forEach、for...in 和 for...of 的区别？
 - forEach 是常规的同步循环
-- for...of、for...in 用于异步遍历
+- for...of、for...in 用于异步遍历，循环数组使用 for...of，循环对象使用 for...in。
 ```javascript
 function muti(num) {
   return new Promise(resolve => {
@@ -357,7 +365,7 @@ arrs.forEach(async function (item) {
 - 宏任务：
 	- 包括：setTimeout、setInterval、Ajax 和 DOM 事件，以及 node 中的 setImmediate。
 - 微任务：
-  - 包括：Promise、async/await 以及 node 中的 process.nextTick。
+  - 包括：Promise、async/await 以及 node 中的 process.nextTick（微任务中优先级最高的一项）。
 - 区别：
 	- 微任务和宏任务都为异步，但是微任务的执行时机比宏任务早。
 	- 微任务在 DOM 渲染完成之前触发、宏任务在 DOM 渲染完成之后触发。

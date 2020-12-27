@@ -207,6 +207,7 @@ flex 布局的优势在于我们只需要声明布局应该具有的行为，而
 
 ## 介绍 requestAnimationFrame
 功能：用来实现动画持久化。要求浏览器在下次重绘之前调用指定的回调函数更新动画。
+使用方式就是将要被控制频率的代码放入 window.requestAnimationFrame 中。
 - 要想动画流畅，更新频率要60帧/s，即16.67ms 更新一次视图ww
 - setTimeout 要手动控制频率，而 RAF 浏览器会自动控制
 - 后台标签或隐藏 iframe 中，RAF 会暂停，而 setTimeout 依然执行

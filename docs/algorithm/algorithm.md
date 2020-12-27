@@ -80,6 +80,8 @@ console.log(uniqueArr([1,2,3,4,5,3,21]));
 console.log(uniqueArr2([1,2,3,4,5,3,21]));
 ``` 
 
+## 数组中重复元素
+
 ## 数组并集？
 并集：两个数组中所有不重复的元素。
 ```javascript

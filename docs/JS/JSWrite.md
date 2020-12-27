@@ -144,8 +144,6 @@ function deepFreeze(obj) {
 }
 ```
 
-## 实现浅拷贝？
-
 ## 手写深拷贝？:star2:
 - 定义：完全拷贝一个新对象，修改其中一个不会影响另外一个。
 - 实现方式：JSON.parse(JSON.stringify(obj))但是引用循环会出现问题、递归方式逐一赋值。
