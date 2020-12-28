@@ -68,6 +68,8 @@ const arrProto = Object.create(oldArrayProperty);
 )
 ```
 
+## nextTick 的实现原理？
+
 ## virtual dom 原理实现？:star2:
 - 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象。
 - diff 算法： 比较两棵虚拟 DOM 树的差异。

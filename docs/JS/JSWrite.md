@@ -2,36 +2,47 @@
 
 ## 手写节流函数？:star2:
 - 定义：在指定的时间间隔内只会执行一次任务。
-- 应用：适合大量时间按时间平均触发。（如：DOM 元素拖拽、滚动条时间等）
+- 应用：适合大量时间按时间平均触发。（如：DOM 元素拖拽、滚动事件、输入联想功能等）
 ```javascript
-function throttle(fn, interval = 500) {
+function throttle (fn, delay = 500) {
+  // 首行设置一个变量
   let timer = null;
-
-  return (...args) => {
-    if (timer) return false;
-    
-    fn.apply(this, args);
-    timer = setTimeout(() => {
-      clearTimeout(timer);
-      timer = null;
-    }, interval);
+  return function () {
+    let that = this;
+    let args = arguments;
+    // 定时器如果在执行时，直接返回
+    if (timer) {
+      return false
+    }
+    // 设置定时器
+    timer = setTimeout(function () {
+      // 调用函数并将定时器更改为false
+      fn.apply(that, args);
+      timer = null
+    }, delay)
   };
 }
 ```
 
 ## 手写防抖函数？:star2:
 - 定义：任务频繁触发的情况下，只有任务触发的时间间隔超过指定间隔的时候，任务才会执行。
-- 应用：适合多次事件一次响应。（如：适合防止表单多次提交、输入框连续输入等）
+- 应用：适合多次事件一次响应。（如：适合防止表单多次提交、输入框结束输入发送请求等）
 ```javascript
 // 防抖函数
-function debounce(fn, interval = 500) {
-  let timeout = null;
-  
+function debounce(fn, delay = 500) {
+  // 首行设置一个变量
+  let timer = null;
   return function () {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, interval);
+    let that = this;
+    let args = arguments;
+    // 定时器如果在执行时，将定时器销毁
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(function() {
+      // 超过一段时间后调用函数
+      fn.apply(that, args);
+    }, delay)
   };
 }
 ```
@@ -41,10 +52,10 @@ function debounce(fn, interval = 500) {
 ```javascript
 Function.prototype.myApply = function() {
   const params = [...arguments]; // 统一获取参数
-  const _this = params[0]; // 获取要绑定的作用域
+  const that = params[0] || window; // 获取要绑定的作用域
   const args = params[1]; // 获取要指定的参数数组
-  _this.fn = this; // 绑定作用域
-  return _this.fn(...args) // 执行函数
+  that.fn = this; // 绑定作用域
+  return that.fn(...args) // 执行函数
 };
 window.x = 1;
 let a = {
@@ -64,10 +75,10 @@ fn1.myApply(a, [2.1, 2.2]);
 ```javascript
 Function.prototype.myCall = function() {
   const params = [...arguments]; // 统一获取参数
-  const _this = params[0]; // 获取要绑定的作用域
+  const that = params[0] || window; // 获取要绑定的作用域
   const args = params.slice(1); // 获取要指定的参数数组
-  _this.fn = this; // 绑定作用域
-  return _this.fn(...args); // 执行函数
+  that.fn = this; // 绑定作用域
+  return that.fn(...args); // 执行函数
 };
 window.x = 1;
 let a = {
@@ -87,19 +98,24 @@ fn1.myCall(a, 2.1, 2.2);
 ```javascript
 Function.prototype.myBind = function() {
   const params = [...arguments];// 统一获取参数
-  const _this = params[0]; // 获取要绑定的作用域
+  const that = params[0] || window; // 获取要绑定的作用域
   const args = params.slice(1); // 获取要指定的参数数组
-  _this.fn = this; // 绑定作用域
+  that.fn = this; // 绑定作用域
   return function() {
-   _this.fn(...args) // 返回函数
+    that.fn(...args) // 返回函数
   }  
 };
-// 使用
-function fn1(a, b, c) {
-  console.log('this', this);
-  console.log(a, b, c);
+window.x = 1;
+let a = {
+  x: 2
+};
+function fn1(num1, num2) {
+  console.log(this.x);
+  console.log(num1);
+  console.log(num2);
 }
-const fn2 = fn1.myBind({x: 100}, 1, 2, 3);
+fn1(1.1, 1.2);
+const fn2 = fn1.myBind(a, 2.1, 2.2);
 fn2();
 ```
 
@@ -222,11 +238,12 @@ console.log(isEqual(obj1, obj2)) // true key-value 相同即可。
 [看下 new 执行过程](../JS/JSPrototype.html#new-运算符的执行过程)
 ```javascript
 function myNew() {
-  const args = Array.prototype.slice.call(arguments);
+  const params = [...arguments];
+  const thisConstructor = params[0]; // 获取构造函数
+  const args = params.slice(1); // 获取其余参数
   // 在内存中声明一个对象
   const o = {};
   // 对象的隐式原型链接到构造函数的显示原型
-  const thisConstructor = args.shift();
   o.__proto__ = thisConstructor.prototype;
   // 绑定 this
   const result = thisConstructor.apply(o, args);
@@ -249,25 +266,38 @@ console.log(per3);
 ```
 
 ## 实现 Object.create
+使用现有对象来提供新创建对象的 \_\_proto\_\_
+```javascript
+function myCreate() {
+  const params = [...arguments];
+  const thisConstructor = params[0];
+  const F = function () {};
+  F.prototype = thisConstructor;
+  return new F();
+}
+const testCreate = myCreate({a: 1, b: 2}); 
+console.log(testCreate);
+```
 
 ## 手写实现 instanceof:star2:
+原理就是：判断右操作数的显示原型是否出现在左操作数的原型链上。
 [看下 insanceof 原理](../JS/JSPrototype.html#instanceof-原理)
 ```javascript
 function myInstanceof(leftValue, rightValue) {
   // 左操作数的隐式原型
-  const leftProto = leftValue.__proto__;
+  const leftValueProto = leftValue.__proto__;
   // 右操作数的显示原型
-  const rightPrototype = rightValue.prototype;
+    const rightValuePrototype = rightValue.prototype;
   // 循环调用出现左操作数的隐式原型为 null 时
-  if (leftProto === null) {
+  if (leftValueProto === null) {
     return false
   }
   // 左操作数的隐式原型等于有操作数的显示原型
-  if (leftProto === rightPrototype) {
+  if (leftValueProto === rightValuePrototype) {
     return true
   }
   // 循环调用
-  return myInstanceof(leftProto, rightValue);
+  return myInstanceof(leftValueProto, rightValue);
 }
 ```
 
@@ -387,37 +417,66 @@ String.prototype.myTrim = function() {
 }
 ```
 
-## 实现 JSON.stringify
-
-## 实现 JSON.parse
-
 ## 手写一个简易的 ajax
 ```javascript
-// TODO 去完善
-const xhr = new XMLHttpRequest();
-xhr.open('GET', 'xxx', true); // true 为异步请求
-xhr.onreadystatechange = function() {
-  if (xhr.readyState === 4) {
-    if (xhr.status === 200) {
-      console.log(JSON.parse(xhr.responseText));
-    } else {
-      console.log(xhr.status);
-    }
+function ajax(method = 'get', url, data, callback) {
+  let xhr;
+  if (window.XMLHttpRequest) {
+    xhr = new XMLHttpRequest();
+  } else {
+    xhr = new ActiveXObject('Microsoft.XMLHTTP'); // 兼容老版本 IE
   }
-};
-xhr.send(null)
+  // get 请求需要将参数拼接到 url 上
+  let paramArr = [];
+  let encodeData;
+	if (data instanceof Object) {
+    for (let key in data) {
+    // 参数拼接需要通过 encodeURIComponent 进行编码
+    paramArr.push( encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) )
+    }
+    encodeData = paramArr.join('&')
+	}
+  if (method.toLocaleLowerCase() === 'get') {
+   const index = url.indexOf('?');
+   if (index === -1) {
+     url += '?';
+   } else {
+     url += '&'
+   }
+   url += encodeData                 
+  }
+  xhr.open(method, url, true);
+  if (method.toLocaleLowerCase() === 'get') {
+    xhr.send(null)  
+  } else {
+    xhr.send(JSON.stringify(data))
+  }
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        return callback(JSON.parse(xhr.responseText));
+      } else {
+        return xhr.status;
+      }
+    }
+  };
+}
+const testUrl = 'https://www.fastmock.site/mock/3410de68d1e03849d328e0b0651c4f1f/api/api/services/app/TransactionBill/GetTransactionBillInfo';
+const ajaxGet = ajax('get', testUrl, { a: 1 }, function (res) {
+  console.log(res)
+});
 ```
 
 ## 实现 JSONP
 ```javascript
 function jsonp(url, jsonpCallback, success) {
-  const script = document.createElement('script')
-  script.src = url
-  script.async = true
-  script.type = 'text/javascript'
+  const script = document.createElement('script');
+  script.src = url;
+  script.async = true;
+  script.type = 'text/javascript';
   window[jsonpCallback] = function(data) {
     success && success(data)
-  }
+  };
   document.body.appendChild(script)
 }
 ```

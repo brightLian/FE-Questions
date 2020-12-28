@@ -10,7 +10,7 @@
 	- 减少访问次数：合并代码、SSR、缓存
 		- 非 SSR：先加载网页，再加载数据，再渲染数据。
 	- 使用更加的网络：CDN
-- 让渲染更快ww
+- 让渲染更快
 	- CSS 放在 head，JS 放在 body 最下边
 	- 尽早执行 JS，用 DOMContentLoaded 触发
 	- 懒加载 
