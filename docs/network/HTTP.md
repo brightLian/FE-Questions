@@ -103,7 +103,7 @@ POST 请求非幂等、PUT 请求具有幂等性。
 ## 为什么有了 HTTP 还要 HTTPS？
 https 是安全版的 http，http 协议的数据都是明文传输的，所以对于一些敏感信息的传输不安全，HTTPS 就是为了解决 HTTP 的不安全而生的。
 
-## HTTPS 如何保证安全？TODO详情
+## HTTPS 如何保证安全？
 增加了安全层(SSL/TLS) 
 
 ## HTTP2、HTTP1.X 有什么功能？:star2:

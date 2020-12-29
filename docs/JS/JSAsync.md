@@ -324,8 +324,6 @@ console.log('script start'); // 1
 // 立即执行
 async1();
 console.log('script end'); // 4
-
-
 ```
 
 ## forEach、for...in 和 for...of 的区别？

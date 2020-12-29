@@ -38,7 +38,7 @@ loader 的执行顺序是从后往前的
 - chunk：是指 webpack 在进行模块的依赖分析的时候，代码分割出来的代码块。（存在内存中，可能由多个模块合成，entry 生成、import()动态加载、splitChunks 拆分代码块）
 - module：是开发中的单个模块，各个源码文件。
 
-## webpack 如何抽离公共代码？:star2: TODO
+## webpack 如何抽离公共代码？:star2: 
 webpack4 之后内置 splitChunks 插件，专门用于抽离公共代码。
 ```javascript
 module.exports = {
