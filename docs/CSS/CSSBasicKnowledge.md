@@ -55,7 +55,7 @@ position 有以下属性：
 - **visibility: hidden** 元素设置为隐藏，占据位置但是不可交互。
 - **overflow: hidden** 元素超出部分的内容设置为隐藏，占据位置但是不可交互。
 - **display: none** 元素设置为不展示，不占据位置并且不可交互。
-- **transform: scale(0, 0)** 将元素缩放为0，占据位置但是不可交互。
+- **transform: scale(0)** 将元素缩放为0，占据位置但是不可交互。
 
 ## BFC 及其应用？:star2:
 - **定义：** 全称为块级格式化上下文，实际是一个独立渲染的区域，这个区域内部元素不会影响边界以外的元素。
@@ -205,7 +205,7 @@ flex 布局的优势在于我们只需要声明布局应该具有的行为，而
 	- rotate：旋转
 	- opacity：透明度
 
-## 介绍 requestAnimationFrame
+## 介绍 requestAnimationFrame:star2:
 功能：用来实现动画持久化。要求浏览器在下次重绘之前调用指定的回调函数更新动画。
 使用方式就是将要被控制频率的代码放入 window.requestAnimationFrame 中。
 - 要想动画流畅，更新频率要60帧/s，即16.67ms 更新一次视图ww

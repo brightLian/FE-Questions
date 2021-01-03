@@ -484,12 +484,153 @@ function jsonp(url, jsonpCallback, success) {
 ## 实现 Promise:star2:
 
 ## 实现 Promise.all
+Promise.all 的特点：
+- 接收一个 Promise 实例的数组
+- 如果元素不是一个 Promise 对象，则使用 Promise.resolve() 转成 Promise 对象
+- 如果全部成功，状态变为 resolved，返回值即那个组成一个数组传给回调
+- 只要有一个失败，状态变为 rejected，返回值将直接作为回调
+```javascript
+Promise.myAll = function(promises) {
+  return new Promise((resolve, reject) => {
+    if (Object.prototype.toString.call(promises) === '[object, Array]') {
+        return reject(new TypeError('arguments must be an array'));
+    }
+    let resultCount = 0;
+    let promisesLength = promises.length;
+    let results = new Array(promisesLength);
+    for (let i = 0; i < promisesLength; i++) {
+      Promise.resolve(promises[i]).then((res) => {
+        resultCount++;
+        results[i] = res;
+        if (resultCount === promisesLength) {
+          return resolve(results)
+        }
+      }, (reason) => {
+        return reject(reason)
+      })
+    }
+  })
+};
+
+const p1 = Promise.resolve(1),
+      p2 = Promise.reject(2),
+      p3 = Promise.resolve(3);
+Promise.myAll([p1, p2, p3]).then((results) => {
+  //then方法不会被执行
+  console.log(results);
+}).catch(function (e){
+  //catch方法将会被执行，输出结果为：2
+  console.log(e);
+})
+```
 
 ## 实现 Promise.allSettled
+Promise.allSettled 的特点：
+- 接收一个 Promise 实例的数组
+- 如果元素不是一个 Promise 对象，则使用 Promise.resolve() 转成 Promise 对象
+- 如果传入的 promise 全部执行完后，返回值为处理后的集合
+```javascript
+Promise.myAllSettled = function(promises) {
+  return new Promise((resolve, reject) => {
+     if (Object.prototype.toString.call(promises) === '[object, Array]') {
+            return reject(new TypeError('arguments must be an array'));
+     }
+     let resultCount = 0;
+     let promisesLength = promises.length;
+     if (promisesLength === 0) {
+       resolve([]);
+       return;
+     }
+     let results = new Array(promisesLength);
+     for (let i = 0; i < promisesLength; i++) {
+       Promise.resolve(promises[i]).then((res) => {
+         resultCount++;
+         results[i] = {
+           status: 'fulfilled',
+           value: res
+         };
+         if (resultCount === promisesLength) {
+           return resolve(results)
+         }
+       }, (reason) => {
+         resultCount++;
+         results[i] = {
+           status: 'rejected',
+           reason
+         };
+         if (resultCount === promisesLength) {
+           return resolve(results)
+         }
+       })
+     }
+  })
+};
+const p1 = Promise.resolve(1),
+      p2 = Promise.reject(2),
+      p3 = Promise.resolve(3);
+Promise.myAllSettled([p1, p2, p3]).then((results) => {
+  console.log(results);
+  results.forEach((result) => console.log(result.status));
+});
+```
 
 ## 实现 Promise.race
+Promise.race 的特点：
+- 接收一个 Promise 实例的数组
+- 如果元素不是一个 Promise 对象，则使用 Promise.resolve() 转成 Promise 对象
+- 有一个 Promise 完成时，无论成功还是失败，返回值直接作为回调
+```javascript
+Promise.myRace = function(promises) {
+  return new Promise((resolve, reject) => {
+    if (Object.prototype.toString.call(promises) === '[object, Array]') {
+            return reject(new TypeError('arguments must be an array'));
+    }
+    promises.forEach((promise) => {
+      Promise.resolve(promise).then(resolve, reject)
+    })
+  })
+};
+let p1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('1')
+   }, 100)
+});
+let p2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject('2')
+   }, 500)
+});
+Promise.myRace([p1, p2]).then((results) => {
+  // p1和p2中，p1 先完成，输出结果为 1 
+  console.log(results);
+}).catch(function (e){
+  // p2 不会被执行
+  console.log(e);
+})
+```
 
 ## 实现 Promise.finally
+Promise.finally 的特点：
+- 在 Promise 结束时，无论结果是成功还是失败，都会执行指定的回调函数
+- 无论成功还是失败都会返回一个 Promise
+```javascript
+Promise.prototype.myFinally = function(callback) {
+  let P = this.constructor;
+  console.log(this);
+  return this.then(
+    value  => P.resolve(callback()).then(() => value),
+    reason => P.resolve(callback()).then(() => { throw reason })
+  )
+};
+const p1 = Promise.resolve(1);
+p1.then((result) => {
+  console.log(result);
+}).catch((reason) => {
+  console.log(reason);
+}).myFinally(() => {
+  console.log(2); // 永远都会被触发
+})
+```
 
 ## 实现 async/await:star2:
 
@@ -547,4 +688,4 @@ const curry = fn => {
 };
 ```
 
-## 用setTimeout实现setInterval
+## 用 setTimeout 实现 setInterval

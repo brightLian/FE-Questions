@@ -24,7 +24,7 @@
 - merge：
 	- 自动创建一个新的 commit
   - 合并的时候遇到冲突，仅需要修改后重新 commit
- 	- 记录了真实的 commit 情况，包括每个分支的详情
+  - 记录了真实的 commit 情况，包括每个分支的详情
 
 ## reset、revert、checkout 之间的区别？
 - git revert 后会多出一条commit，这里可进行回撤操作。
