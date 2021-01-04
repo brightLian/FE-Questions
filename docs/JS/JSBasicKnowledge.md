@@ -130,7 +130,7 @@ function debounce(fn, interval = 500) {
 	- delete(value)：删除某个值，返回布尔类型。
 	- has(value)：表示参数是否为 Set 的成员，返回布尔类型。
 	- clear()：清除所有成员，没有返回值。
-	- 可以使用 forEach() 进行遍历。
+	- 可以使用 forEach()、for...of 进行遍历。
 - WeakSet：WeakSet 结构与 Set 类似，也是不重复的值的集合。
 	- 与 Set 不同点1：成员只能是对象，不能是其他类型的值。
 	- 与 Set 不同点2：WeakSet 中对象都是弱引用，所以不能遍历。

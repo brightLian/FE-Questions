@@ -106,3 +106,8 @@ var deleteDuplicates = function(head) {
   return head
 };
 ```
+
+## leetcode141：环形链表
+```javascript
+
+```

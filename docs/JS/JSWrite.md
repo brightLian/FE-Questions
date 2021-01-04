@@ -231,7 +231,7 @@ function isEqual(obj1, obj2) {
   }
   return true
 }
-console.log(isEqual(obj1, obj2)) // true key-value 相同即可。
+console.log(isEqual(obj1, obj2)); // true key-value 相同即可。
 ```
 
 ## 实现 new:star2:
@@ -283,11 +283,12 @@ console.log(testCreate);
 原理就是：判断右操作数的显示原型是否出现在左操作数的原型链上。
 [看下 insanceof 原理](../JS/JSPrototype.html#instanceof-原理)
 ```javascript
+// 递归方式
 function myInstanceof(leftValue, rightValue) {
   // 左操作数的隐式原型
   const leftValueProto = leftValue.__proto__;
   // 右操作数的显示原型
-    const rightValuePrototype = rightValue.prototype;
+  const rightValuePrototype = rightValue.prototype;
   // 循环调用出现左操作数的隐式原型为 null 时
   if (leftValueProto === null) {
     return false
@@ -298,6 +299,18 @@ function myInstanceof(leftValue, rightValue) {
   }
   // 循环调用
   return myInstanceof(leftValueProto, rightValue);
+}
+
+// 循环方式
+function myInstanceof2(leftValue, rightValue) {
+  let leftValueProto = leftValue.__proto__;
+  while (leftValueProto) {
+    if (leftValueProto === rightValue.prototype) {
+      return true
+    }
+    leftValueProto = leftValueProto.__proto__
+  }
+  return false
 }
 ```
 

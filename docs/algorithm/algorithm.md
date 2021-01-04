@@ -304,4 +304,23 @@ repeatFunc();
 
 ## 一副扑克牌，随机抽 5 张，判断是否是顺子，大小王可以替代任意牌。
 
- 
+## 使用链表指针获取 JSON 的节点值
+```javascript
+const json = {
+  a: {
+    b: {
+      c: 1
+    }
+  },
+  d: {
+    e: 2
+  }
+};
+const path1 = ['a', 'b', 'c'];
+const path2 = ['d', 'e'];
+
+let p = json;
+path1.forEach(k => {
+  p = p[k];
+})
+``` 
