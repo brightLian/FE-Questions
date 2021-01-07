@@ -12,6 +12,10 @@
 - 删除数组中的最后一个元素 array.pop();
 - 获取一个数组中的最大值 Math.max(...arr);
 - 获取一个数组中的最小值 Math.min(...arr);
+- 获取数组最后一个元素 array.slice(-1)
+- 获取字符串最后一个元素 string.substr(string.length-1,1)
+- 数组转为字符串 string.split('')
+- 字符串转为数组 array.join('')
 
 ## leetcode20：有效的括号
 ```javascript

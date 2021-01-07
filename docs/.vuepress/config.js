@@ -89,6 +89,8 @@ module.exports = {
                     '/algorithm/algorithm.md',
                     '/algorithm/stack.md',
                     '/algorithm/queue.md',
+                    '/algorithm/linkedList.md',
+                    '/algorithm/set.md',
                 ]
             },
             {

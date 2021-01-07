@@ -45,7 +45,7 @@ var deleteNode = function(node) {
 };
 ```
 
-## leetcode：206反转链表
+## leetcode206：反转链表
 双指针遍历链表
 ```javascript
 var reverseList = function(head) {

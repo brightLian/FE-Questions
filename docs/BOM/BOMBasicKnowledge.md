@@ -35,6 +35,6 @@
 	- history.pushState()：添加历史条目（Vue-router 就是基于此实现）
 	- history.replaceState()：修改历条目（Vue-router 就是基于此实现）
 
-## 使用 JS 如何改变 URL 且页面不刷新？
+## 使用 JS 改变 URL 且页面不刷新？:star2:
 - 改变 hash：改变 hash 不会刷新页面，也会改变 URL，也能监听 hashchange 事件进行页面的渲染。
 - 利用 history：通过 history.pushState() 或者 history.replaceState()。

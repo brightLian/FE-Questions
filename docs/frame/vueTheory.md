@@ -69,6 +69,9 @@ const arrProto = Object.create(oldArrayProperty);
 ```
 
 ## nextTick 的实现原理？
+- 实际是利用微任务的执行时间，先于 DOM 的渲染，先于宏任务的执行时间。
+- 只需要将 nextTick 里的代码放在 DOM 渲染之后执行，就可以访问到新的 DOM 了。
+- 通俗一点就是可以把 nextTick 想像成一个特殊的宏任务，放在了本次时间循环的末尾调用。
 
 ## virtual dom 原理实现？:star2:
 - 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象。

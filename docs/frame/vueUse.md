@@ -23,6 +23,7 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 可以在钩子函数 created、beforeMount、mounted 中进行调用，因为在这三个钩子函数中，data 已经创建，可以将服务端端返回的数据进行赋值。    
 但是本人推荐在 created 钩子函数中调用异步请求，因为在 created 钩子函数中调用异步请求有以下优点：
 - 能更快获取到服务端数据，减少页面 loading 时间；
+- 在 mounted 之前获取的数据，子组件中才可以获取到；
 - ssr 不支持 beforeMount 、mounted 钩子函数，所以放在 created 中有助于一致性。
 
 ## 何时使用 beforeDestroy 生命周期？
