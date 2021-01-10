@@ -100,8 +100,6 @@ function debounce(fn, interval = 500) {
 }
 ```
 
-## 什么是深度优先遍历和广度优先遍历？
-
 ## Symbol 是什么？
 - 定义：Symbol 是 ES6中新的原始数据类型，表示独一无二的值。
 - 注意事项：
@@ -113,7 +111,7 @@ function debounce(fn, interval = 500) {
 ## ES6Module 和 CommonJS 模块的异同点？:star2:
 - 模块化的作用：提高了项目的可维护、可拓展和可协作性。   
 - 使用场景：我们在浏览器中使用 ES6 的模块化支持，在 Node 中使用 CommonJS 的模块化支持。（webpack 中的 Tree-Shaking 只有 ES6Module 支持）
-- 区别： 
+- 区别：
 
 |   区别点  | ES6Module 形式 |  CommonJS  |
 |:-------------:|:-------------:|:----------------------:|

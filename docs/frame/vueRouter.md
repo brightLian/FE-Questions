@@ -1,16 +1,13 @@
 # Vue-Router 相关
-## react-router 里的 <Link> 标签和 <a> 标签有什么区别？
-- <Link> 是 react-router 里实现路由跳转的链接，一般配合 <Route> 使用，react-router 接管了其默认的链接跳转行为，区别于传统的页面跳转，<Link> 的“跳转”行为只会触发相匹配的 <Route> 对应的页面内容更新，而不会刷新整个页面。
-- <a> 标签就是普通的超链接了，用于从当前页面跳转到 href 指向的另一个页面
-
-## 如何禁掉 <a> 标签默认事件，禁掉之后如何实现跳转。
+## 如何禁掉 a 标签默认事件，禁掉之后如何实现跳转。
 可以通过 Vue-Router 提供的编程式导航来实现跳转。
 - router.push：跳转，实际就是模拟 history.pushState 实现的。
 - router.replace：重定向，实际就是模拟 history.replaceState 实现的。
 - router.go：前进/后退多少步，实际就是模拟 history.go 实现的。
 
 ## 前端路由模式有哪些？:star2:
-h5 history 模式需要 server 端支持；hash 模式不需要。
+- 前端的路由模式一共有两种：history 模式和 hash 模式。
+- h5 history 模式需要 server 端支持；hash 模式不需要。
 - hash：
 	- 特点：
 		- hash 变化会触发网页跳转，即浏览器的前进后退

@@ -91,6 +91,8 @@ module.exports = {
                     '/algorithm/queue.md',
                     '/algorithm/linkedList.md',
                     '/algorithm/set.md',
+                    '/algorithm/map.md',
+                    '/algorithm/tree.md',
                 ]
             },
             {
