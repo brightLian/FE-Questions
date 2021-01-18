@@ -93,6 +93,13 @@ module.exports = {
                     '/algorithm/set.md',
                     '/algorithm/map.md',
                     '/algorithm/tree.md',
+                    '/algorithm/graph.md',
+                    '/algorithm/heap.md',
+                    '/algorithm/sortAndSearch.md',
+                    '/algorithm/divideAndConquer.md',
+                    '/algorithm/dynamicProgramming.md',
+                    '/algorithm/greedy.md',
+                    '/algorithm/backtracking.md',
                 ]
             },
             {

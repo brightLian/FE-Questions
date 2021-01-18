@@ -1,5 +1,35 @@
 # JS 手写代码
 
+## 手动实现数组展平？:star2:
+```javascript
+// 展平一层
+function flatOne (arr) {
+  return [].concat(...arr);
+}
+// 完全展平
+function completeFlat(arr) {
+  const isDeep = arr.some(item => item instanceof Array);
+  if (!isDeep) {
+    return arr
+  }
+  const res = [].concat(...arr);
+  return completeFlat(res);
+}
+// 指定展平层级（模拟数组对 flat 方法）
+function flat (arr, dep) {
+  const isDeep = arr.some(item => item instanceof Array);
+  if (!isDeep || dep <= 0) {
+    return arr
+  }
+  const res = [].concat(...arr);
+  return flat(res, --dep);
+}
+console.log(flatOne([1, 2, [3, [4, [5]]]]));
+console.log(completeFlat([1, 2, [3, [4, [5]]]]));
+console.log(flat([1, 2, [3, [4, [5]]]], 2));
+```
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
+
 ## 手写节流函数？:star2:
 - 定义：在指定的时间间隔内只会执行一次任务。
 - 应用：适合大量时间按时间平均触发。（如：DOM 元素拖拽、滚动事件、输入联想功能等）
@@ -337,6 +367,8 @@ console.log(lml);
 console.log(xxs);
 ```
 
+## 使用es5实现es6的class
+
 ## 使用组合继承模拟类的继承
 - 这种方式是在 class 出现之前，最常用来实现继承的方式
 - 使用原型链实现对属性和方法的继承，使用构造函数来实现对实例属性对继承。
@@ -495,8 +527,48 @@ function jsonp(url, jsonpCallback, success) {
 ```
 
 ## 实现 Promise:star2:
+```javascript
+function myPromise(constructor){
+    let self=this;
+    self.status="pending" //定义状态改变前的初始状态
+    self.value=undefined;//定义状态为resolved的时候的状态
+    self.reason=undefined;//定义状态为rejected的时候的状态
+    function resolve(value){
+        //两个==="pending"，保证了状态的改变是不可逆的
+       if(self.status==="pending"){
+          self.value=value;
+          self.status="resolved";
+       }
+    }
+    function reject(reason){
+        //两个==="pending"，保证了状态的改变是不可逆的
+       if(self.status==="pending"){
+          self.reason=reason;
+          self.status="rejected";
+       }
+    }
+    //捕获构造异常
+    try{
+       constructor(resolve,reject);
+    }catch(e){
+       reject(e);
+    }
+}
+myPromise.prototype.then=function(onFullfilled,onRejected){
+  let self=this;
+  switch(self.status){
+    case "resolved":
+      onFullfilled(self.value);
+      break;
+    case "rejected":
+      onRejected(self.reason);
+      break;
+    default:
+  }
+}
+```
 
-## 实现 Promise.all
+## 实现 Promise.all:star2:
 Promise.all 的特点：
 - 接收一个 Promise 实例的数组
 - 如果元素不是一个 Promise 对象，则使用 Promise.resolve() 转成 Promise 对象
@@ -587,7 +659,7 @@ Promise.myAllSettled([p1, p2, p3]).then((results) => {
 });
 ```
 
-## 实现 Promise.race
+## 实现 Promise.race:star2:
 Promise.race 的特点：
 - 接收一个 Promise 实例的数组
 - 如果元素不是一个 Promise 对象，则使用 Promise.resolve() 转成 Promise 对象
@@ -646,10 +718,187 @@ p1.then((result) => {
 ```
 
 ## 实现 async/await:star2:
+```javascript
+function asyncToGenerator(generatorFunc) {
+  // 返回的是一个新的函数
+  return function() {
+  
+    // 先调用generator函数 生成迭代器
+    // 对应 var gen = testG()
+    const gen = generatorFunc.apply(this, arguments)
 
-## 实现发布订阅模式
+    // 返回一个promise 因为外部是用.then的方式 或者await的方式去使用这个函数的返回值的
+    // var test = asyncToGenerator(testG)
+    // test().then(res => console.log(res))
+    return new Promise((resolve, reject) => {
+    
+      // 内部定义一个step函数 用来一步一步的跨过yield的阻碍
+      // key有next和throw两种取值，分别对应了gen的next和throw方法
+      // arg参数则是用来把promise resolve出来的值交给下一个yield
+      function step(key, arg) {
+        let generatorResult
+        
+        // 这个方法需要包裹在try catch中
+        // 如果报错了 就把promise给reject掉 外部通过.catch可以获取到错误
+        try {
+          generatorResult = gen[key](arg)
+        } catch (error) {
+          return reject(error)
+        }
 
-## 实现 Event（event  Bus）
+        // gen.next() 得到的结果是一个 { value, done } 的结构
+        const { value, done } = generatorResult
+
+        if (done) {
+          // 如果已经完成了 就直接resolve这个promise
+          // 这个done是在最后一次调用next后才会为true
+          // 以本文的例子来说 此时的结果是 { done: true, value: 'success' }
+          // 这个value也就是generator函数最后的返回值
+          return resolve(value)
+        } else {
+          // 除了最后结束的时候外，每次调用gen.next()
+          // 其实是返回 { value: Promise, done: false } 的结构，
+          // 这里要注意的是Promise.resolve可以接受一个promise为参数
+          // 并且这个promise参数被resolve的时候，这个then才会被调用
+          return Promise.resolve(
+            // 这个value对应的是yield后面的promise
+            value
+          ).then(
+            // value这个promise被resove的时候，就会执行next
+            // 并且只要done不是true的时候 就会递归的往下解开promise
+            // 对应gen.next().value.then(value => {
+            //    gen.next(value).value.then(value2 => {
+            //       gen.next() 
+            //
+            //      // 此时done为true了 整个promise被resolve了 
+            //      // 最外部的test().then(res => console.log(res))的then就开始执行了
+            //    })
+            // })
+            function onResolve(val) {
+              step("next", val)
+            },
+            // 如果promise被reject了 就再次进入step函数
+            // 不同的是，这次的try catch中调用的是gen.throw(err)
+            // 那么自然就被catch到 然后把promise给reject掉啦
+            function onReject(err) {
+              step("throw", err)
+            },
+          )
+        }
+      }
+      step("next")
+    })
+  }
+}
+```
+
+## 实现发布订阅模式/ eventBus
+```javascript
+let eventEmitter = {
+    // 缓存列表
+    list: {},
+    // 订阅
+    on (event, fn) {
+        let _this = this;
+        // 如果对象中没有对应的 event 值，也就是说明没有订阅过，就给 event 创建个缓存列表
+        // 如有对象中有相应的 event 值，把 fn 添加到对应 event 的缓存列表里
+        (_this.list[event] || (_this.list[event] = [])).push(fn);
+        return _this;
+    },
+    // 监听一次
+    once (event, fn) {
+        // 先绑定，调用后删除
+        let _this = this;
+        function on () {
+            _this.off(event, on);
+            fn.apply(_this, arguments);
+        }
+        on.fn = fn;
+        _this.on(event, on);
+        return _this;
+    },
+    // 取消订阅
+    off (event, fn) {
+        let _this = this;
+        let fns = _this.list[event];
+        // 如果缓存列表中没有相应的 fn，返回false
+        if (!fns) return false;
+        if (!fn) {
+            // 如果没有传 fn 的话，就会将 event 值对应缓存列表中的 fn 都清空
+            fns && (fns.length = 0);
+        } else {
+            // 若有 fn，遍历缓存列表，看看传入的 fn 与哪个函数相同，如果相同就直接从缓存列表中删掉即可
+            let cb;
+            for (let i = 0, cbLen = fns.length; i < cbLen; i++) {
+                cb = fns[i];
+                if (cb === fn || cb.fn === fn) {
+                    fns.splice(i, 1);
+                    break
+                }
+            }
+        }
+        return _this;
+    },
+    // 发布
+    emit () {
+        let _this = this;
+        // 第一个参数是对应的 event 值，直接用数组的 shift 方法取出
+        let event = [].shift.call(arguments),
+            fns = [..._this.list[event]];
+        // 如果缓存列表里没有 fn 就返回 false
+        if (!fns || fns.length === 0) {
+            return false;
+        }
+        // 遍历 event 值对应的缓存列表，依次执行 fn
+        fns.forEach(fn => {
+            fn.apply(_this, arguments);
+        });
+        return _this;
+    }
+};
+
+function user1 (content) {
+    console.log('用户1订阅了:', content);
+}
+
+function user2 (content) {
+    console.log('用户2订阅了:', content);
+}
+
+function user3 (content) {
+    console.log('用户3订阅了:', content);
+}
+
+function user4 (content) {
+    console.log('用户4订阅了:', content);
+}
+
+// 订阅
+eventEmitter.on('article1', user1);
+eventEmitter.on('article1', user2);
+eventEmitter.on('article1', user3);
+
+// 取消user2方法的订阅
+eventEmitter.off('article1', user2);
+
+eventEmitter.once('article2', user4)
+
+// 发布
+eventEmitter.emit('article1', 'Javascript 发布-订阅模式');
+eventEmitter.emit('article1', 'Javascript 发布-订阅模式');
+eventEmitter.emit('article2', 'Javascript 观察者模式');
+eventEmitter.emit('article2', 'Javascript 观察者模式');
+
+// eventEmitter.on('article1', user3).emit('article1', 'test111');
+
+/*
+    用户1订阅了: Javascript 发布-订阅模式
+    用户3订阅了: Javascript 发布-订阅模式
+    用户1订阅了: Javascript 发布-订阅模式
+    用户3订阅了: Javascript 发布-订阅模式
+    用户4订阅了: Javascript 观察者模式
+*/
+```
 
 ## 使用 proxy 实现简单的数据绑定
 ```html
@@ -702,3 +951,16 @@ const curry = fn => {
 ```
 
 ## 用 setTimeout 实现 setInterval
+```javascript
+function mySetInterval() {
+  mySetInterval.timer = setTimeout(() => {
+    arguments[0]()
+    mySetInterval(...arguments)
+  }, arguments[1])
+}
+
+mySetInterval.clear = function() {
+  clearTimeout(mySetInterval.timer)
+}
+```
+

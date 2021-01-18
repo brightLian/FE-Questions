@@ -118,7 +118,9 @@ function debounce(fn, interval = 500) {
 | 使用   | import / export | require / module.exports / exports |
 | 是否支持动态引入  | 不支持 (babel 下可支持) | 支持 |
 | 同/异步   | 异步 | 同步 |
-| 导入方式  | 是值拷贝，导出值变化不会影响导入值 | import指向 内存地址，导入值会随导出值而变化 |
+| 导入方式  | 是值拷贝，导出值变化不会影响导入值 | 是值的引用，导入值会随导出值而变化 |
+| 导出  | 可以导出多个 | 单个值的导出 |
+| this 指向  | this 是 undefined | this 是当前模块 |
 
 ## Set、Map、WeakSet、WeakMap 之间区别？:star2:
 - Set：类似于数组，成员的值是唯一的，但不是数组，是一种特殊的对象。
