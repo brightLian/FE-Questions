@@ -1,34 +1,39 @@
 # JS 手写代码
 
 ## 手动实现数组展平？:star2:
+我们可以利用 [].concat(arr)、
 ```javascript
 // 展平一层
-function flatOne (arr) {
-  return [].concat(...arr);
+Array.prototype.flatOne = function () {
+  return [].concat(...this)
 }
 // 完全展平
-function completeFlat(arr) {
-  const isDeep = arr.some(item => item instanceof Array);
+Array.prototype.flatComplete = function () {
+  const isDeep = this.some(function (item) {
+    return Object.prototype.toString.call(item) === '[object Array]'
+  })
   if (!isDeep) {
-    return arr
+    return this
   }
-  const res = [].concat(...arr);
-  return completeFlat(res);
+  const res = [].concat(...this);
+  return res.flatComplete();
 }
-// 指定展平层级（模拟数组对 flat 方法）
-function flat (arr, dep) {
-  const isDeep = arr.some(item => item instanceof Array);
-  if (!isDeep || dep <= 0) {
-    return arr
+// 指定层级展平
+Array.prototype.flat = function (deep) {
+  const isDeep = this.some(function (item) {
+    return Object.prototype.toString.call(item) === '[object Array]';
+  })
+  if (!isDeep || deep <= 0) {
+    return this
   }
-  const res = [].concat(...arr);
-  return flat(res, --dep);
+  const res = [].concat(...this);
+  return res.flat(--deep);
 }
-console.log(flatOne([1, 2, [3, [4, [5]]]]));
-console.log(completeFlat([1, 2, [3, [4, [5]]]]));
-console.log(flat([1, 2, [3, [4, [5]]]], 2));
+let arr = [1, 2, [3, 4], [5, [6, [7]]]];
+console.log(arr.flatOne());
+console.log(arr.flatComplete());
+console.log(arr.flat(2));
 ```
-https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
 
 ## 手写节流函数？:star2:
 - 定义：在指定的时间间隔内只会执行一次任务。
@@ -367,9 +372,7 @@ console.log(lml);
 console.log(xxs);
 ```
 
-## 使用es5实现es6的class
-
-## 使用组合继承模拟类的继承
+## 使用组合继承模拟类的继承:star2:
 - 这种方式是在 class 出现之前，最常用来实现继承的方式
 - 使用原型链实现对属性和方法的继承，使用构造函数来实现对实例属性对继承。
 ```javascript
@@ -888,16 +891,6 @@ eventEmitter.emit('article1', 'Javascript 发布-订阅模式');
 eventEmitter.emit('article1', 'Javascript 发布-订阅模式');
 eventEmitter.emit('article2', 'Javascript 观察者模式');
 eventEmitter.emit('article2', 'Javascript 观察者模式');
-
-// eventEmitter.on('article1', user3).emit('article1', 'test111');
-
-/*
-    用户1订阅了: Javascript 发布-订阅模式
-    用户3订阅了: Javascript 发布-订阅模式
-    用户1订阅了: Javascript 发布-订阅模式
-    用户3订阅了: Javascript 发布-订阅模式
-    用户4订阅了: Javascript 观察者模式
-*/
 ```
 
 ## 使用 proxy 实现简单的数据绑定

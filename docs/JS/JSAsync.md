@@ -18,7 +18,6 @@
 - 然后继续轮询查找
 
 ## node 的事件循环是什么？:star2:
-<font color='red' size=5 font-weight="bold">重点再看!!!</font>
 - node 也是单线程，相对浏览器多一个微任务 process.nextTick，一个宏任务 setImmediate。
 	- process.nextTick 的回调和 promise 的回调都是微任务，但是 process.nextTick 的回调会比 promise 的先执行
 	- setImmediate 是宏任务，但是和其他宏任务一起执行时得到的结果却是不确定的.
@@ -51,7 +50,8 @@ console.log(3);
 setTimeout(() => console.log(1));
 setImmediate(() => console.log(2));
 ```
-![setImmediate执行时机](/image/setImmediate.png)  
+<img src="/image/setImmediate.png" width = "200" height = "200" />    
+
 照理来说，setTimeout 在 timers 阶段，并且它回调执行的 delay 参数是0，而 setImmediate 在 check 阶段。 
 但是 nodejs 官网关于 setTimeout 的定义有这样一句话：_When delay is larger than 2147483647 or less than 1, the delay will be set to 1. Non-integer delays are truncated to an integer._
    
@@ -73,7 +73,6 @@ fs.readFile('test.js', () => {
 他的执行过程是会先跳过 timers 阶段，回调直接进入 I/0 callback，然后向下执行，到了 check 阶段执行 setImmediate，然后才在下一次循环的 timers 执行 setTimeout。
 
 ## promise 的三种状态，如何变化？:star2:
-<font color='#DEA3DC' size=5>重点再看!!!</font>
 - 三种状态：
 	- pending：进行中的状态，还没有结果
 	- fulfilled：成功的状态
@@ -138,6 +137,7 @@ p4.then(() => {
 }).catch(() => {
   console.log(4.2) // 4.2 catch 被执行
 })
+console.log(p4); // 此时 p4 状态还是 rejected，因为状态之间的改变是不可逆的。 
 ```
 特殊情况1
 ```javascript

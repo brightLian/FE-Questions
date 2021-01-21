@@ -18,6 +18,7 @@
 - 字符串转为数组 string.split('');
 - 数组转为字符串 array.join('');
 - 数组排序使用 sort 时，记住回调函数中的要 return;
+- 在指定位置插入元素：array.splice(index, 0, item)
 
 ## leetcode20：有效的括号
 ```javascript

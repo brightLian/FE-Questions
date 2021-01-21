@@ -44,7 +44,7 @@
 	- 利用动态创建\<script\>不受跨域的影响，但是只能进行 GET 请求
 	- 服务器可以任意动态拼接数据返回
 - CORS：
-	- 利用 Access-Control-xxx-xxx 设置允许跨域的域名、方法等
+	- 利用 Access-Control-Allow-xxx 设置允许跨域的域名、方法等
 	- 需要服务端设置 http header
 - Server Proxy：
 	- 原理是服务器之间的请求是不存在跨域问题的

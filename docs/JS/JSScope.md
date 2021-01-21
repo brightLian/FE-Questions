@@ -34,10 +34,10 @@ console.log(a) // 10
 
 ## 谈谈你对 this  的理解，如何取值？:star2:
 - **简述：** 谁调用指向谁，根据运行时的上下文确定，而不是在定义时就确定。
-- **作为普通函数被调用：** this 在浏览器中指向 window，在 node.js 环境中指向 global。
-- **作为对象方法被调用：** 返回对象本身。
-- **在 class 中被调用：** 实例的本身。
-- **箭头函数：** 箭头函数没有自己的执行上下文，this 就是它外层函数的 this。
+- **在普通函数中使用 this：** this 在浏览器中指向 window，在 node.js 环境中指向 global。
+- **在箭头函数中使用：** this 就是它外层函数的 this，没有外层函数则指向 window/global。
+- **在对象的方法中使用：** this 指向对象本身。
+- **在构造函数中被调用：** this 指向构造函数创建的实例。
 - **使用 apply、call、bind 改变指向：** 根据你传入的参数决定。
 ```javascript
 // 注意两种不同的 this
@@ -58,17 +58,22 @@ const zhangsan2 = {
   sayHi() {
     console.log(this)
   },
-  // 此处因为箭头函数的 this 永远指向定义位置的 this
+  // 此处因为箭头函数的 this 指向外层函数的 this
   waitSayHi() {
     setTimeout(() => {
       console.log(this)     
     })
-  }
+  },
+	// 此处因为箭头函数的 this 指向外层函数的 this，但是没有外层函数所以指向 window
+	waitSayHi2: () => {
+		console.log(this);
+	},
 };
 zhangsan1.sayHi() // 当前对象
 zhangsan2.sayHi() // 当前对象
 zhangsan1.waitSayHi() // window
 zhangsan2.waitSayHi() // 当前对象
+zhangsan2.waitSayHi2() // window
 ```
 
 ## 如何改变 this 的指向？:star2:
@@ -111,7 +116,7 @@ console.log(func.apply(User, [])) // 1，通过 apply 改变 this 的指向
 ```
 
 ## 箭头函数使用时的注意事项？:star2:
-- 函数体内的 this 对象就是定义时所在的对象，而不是使用时所在的对象。
+- 函数体内的 this 对象在定义时就确定了，而不是使用时所在的对象。
 - 不可以作为构造函数，也就是不能使用 new 命令，会报错。
 - 不可以使用 arguments 对象，该对象在函数不存在。但是可以使用 rest 参数来代替。
 - 不可以使用 yield 函数，因为箭头函数不能做 Generator 函数。

@@ -1,25 +1,52 @@
-// 节流
-function throttle (fn, delay) {
-  let timer = null;
-   return function () {
-     const that = this;
-     const args = arguments;
-     if (timer) {
-       return false
-     }
-     timer = setTimeout(function () {
-       fn.apply(that, args);
-       timer = null;
-     }, delay)
-   }
+// 展平一层
+Array.prototype.flatOne = function () {
+  return [].concat(...this)
+}
+// 完全展平
+Array.prototype.flatComplete = function () {
+  const isDeep = this.some(function (item) {
+    return Object.prototype.toString.call(item) === '[object Array]'
+  })
+  if (!isDeep) {
+    return this
+  }
+  const res = [].concat(...this);
+  return res.flatComplete();
+}
+// 指定层级展平
+Array.prototype.flat = function (deep) {
+  const isDeep = this.some(function (item) {
+    return Object.prototype.toString.call(item) === '[object Array]';
+  })
+  if (!isDeep || deep <= 0) {
+    return this
+  }
+  const res = [].concat(...this);
+  return res.flat(--deep);
 }
 
-// 防抖
-function debounce (fn, delay) {
+// 节流函数
+function throttle (fn, delay = 500) {
   let timer = null;
   return function () {
-    const that = this;
-    const args = arguments;
+    let that = this;
+    let args = arguments;
+    if (timer) {
+      return false
+    }
+    timer = setTimeout(function () {
+      fn.apply(that, args);
+      timer = null;
+    }, delay)
+  }
+}
+
+// 防抖函数
+function debounce (fn, delay = 500) {
+  let timer = null;
+  return function () {
+    let that = this;
+    let args = arguments;
     if (timer) {
       clearTimeout(timer);
     }
@@ -41,7 +68,7 @@ Function.prototype.myApply = function () {
 // call
 Function.prototype.myCall = function () {
   const params = [...arguments];
-  const that = params[0];
+  const that = params[0] || window;
   const args = params.slice(1);
   that.fn = this;
   return that.fn(...args);
@@ -50,7 +77,7 @@ Function.prototype.myCall = function () {
 // bind
 Function.prototype.myBind = function () {
   const params = [...arguments];
-  const that = params[0];
+  const that = params[0] || window;
   const args = params.slice(1);
   that.fn = this;
   return function () {
@@ -58,62 +85,61 @@ Function.prototype.myBind = function () {
   }
 }
 
-// 闭包实际应用
-function createCache () {
+// 闭包
+function creteData() {
   const data = {};
   return {
-    set(key, value) {
-      data[key] = value;
-    },
-    get(key) {
+    get (key) {
       return data[key];
+    },
+    set (key, val) {
+      data[key] = val
     }
   }
 }
 
-// 不可变属性
+// 不可变数据
 function deepFreeze (obj) {
-  const propNames = Object.getOwnPropertyNames(obj);
-  for (let name of propNames) {
-    const value = obj[name];
-    if (typeof value === 'object' && value !== null) {
-      deepFreeze(value);
+  let propNames = Object.getOwnPropertyNames(obj);
+  for (const name of propNames) {
+    const val = propNames[name];
+    if (typeof val === 'object' && val !== null) {
+      deepFreeze(val);
     }
   }
   return Object.freeze(obj);
 }
 
-// 深拷贝
+// deepClone
 function deepClone (obj) {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj;
+  if (typeof obj !== 'object' || obj == null) {
+    return obj
   }
   let result;
-  if (Object.prototype.toString.call(obj) === '[object Array]') {
-    result = []
-  } else {
+  if (Object.prototype.toString.call(obj) === '[object Object]') {
     result = {}
+  } else {
+    result = []
   }
   for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
-      result[key] = deepClone(obj[key]);
+      result[key] = deepClone(obj[key])
     }
   }
-  return result
+  return  result
 }
 
 // 深度比较
-function isEqual(obj1, obj2) {
-  if (!isObj(obj1) || !isObj(obj2)) {
+function isEqual (obj1, obj2) {
+  if ((typeof obj1 === 'object' && obj1 !== null) || (typeof obj2 === 'object' && obj2 !== null)) {
     return obj1 === obj2
   }
-  // 浅拷贝直接返回 true
   if (obj1 === obj2) {
     return true
   }
-  const obj1Key = Object.keys(obj1);
-  const obj2Key = Object.keys(obj2);
-  if (obj1Key.length !== obj2Key.length) {
+  const obj1Keys = Object.keys(obj1);
+  const obj2Keys = Object.keys(obj2);
+  if (obj1Keys.length !== obj2Keys.length) {
     return false
   }
   for (let key in obj1) {
@@ -124,9 +150,6 @@ function isEqual(obj1, obj2) {
   }
   return true
 }
-function isObj(obj) {
-  return typeof obj === "object" && obj !== null
-}
 
 // new
 function myNew () {
@@ -134,7 +157,7 @@ function myNew () {
   const thisConstructor = params[0];
   const args = params.slice(1);
   const o = {};
-  o.__proto__ = thisConstructor;
+  o.__proto__ = thisConstructor.prototype;
   const result = thisConstructor.apply(o, args);
   return result instanceof Object ? result : o
 }
@@ -149,60 +172,39 @@ function myInstanceof (leftValue, rightValue) {
   if (leftValueProto === rightValuePrototype) {
     return true
   }
-  myInstanceof(leftValueProto, rightValue);
+  return myInstanceof(leftValueProto, rightValue);
 }
 
 
 
 
 
-Array.prototype.mergeSort = function () {
-  const rec = (arr) => {
-    if (arr.length === 1) {
-      return arr
-    }
-    const mid = Math.floor(arr.length / 2);
-    const left = arr.slice(0, mid);
-    const right = arr.slice(mid, arr.length);
-    const orderLeft = rec(left);
-    const orderRight = rec(right);
-    const res = [];
-    while (orderLeft.length || orderRight.length) {
-      if (orderLeft.length && orderRight.length) {
-        res.push(orderLeft[0] < orderRight[0] ? orderLeft.shift() : orderRight.shift());
-      } else if (orderLeft.length) {
-        res.push(orderLeft.shift())
-      } else {
-        res.push(orderRight.shift())
-      }
-    }
-    return res;
-  }
-  const res = rec(this);
-  res.forEach((n, i) => {
-    this[i] = n;
-  })
-}
-
-var prefixesDivBy5 = function(A) {
-  let len = A.length;
-  let res = [];
-  let curNum = 0
-  for (let i = 0; i < len; i++) {
-    curNum = parseInt(A.slice(0, i).join(''), 2);
-    console.log(curNum);
-    if (curNum % 5 === 0) {
-      res.push(true);
-    } else {
-      res.push(false);
-    }
-  }
-  return res
-};
-console.log(prefixesDivBy5([1,0,1,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,1,1,1,1,1,1,0,0,0,1,0,1,1,1,1,0,1,1,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,1,1,0,0,1,1,1]))
 
 
-console.log(111111)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

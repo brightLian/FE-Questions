@@ -1,12 +1,11 @@
 # JS 原型及原型链相关知识
 ## 谈谈你对原型和原型链的理解？:star2:
 - 原型：
-	- 每一个构造函数都有一个显示原型 prototype
-	- 每一个实例都有一个隐式原型 \_\_proto\_\_
-	- 实例的隐式原型等于其构造函数的显示原型
-	- 在实例中获取属性和方法时，先在自身属性和方法中寻找，如果找不到则自动去 \_\_proto\_\_ 寻找。
+	- 每一个构造函数都有一个显示原型 prototype。
+	- 每一个实例都有一个隐式原型 \_\_proto\_\_。
+	- 实例的隐式原型等于其构造函数的显示原型。
 - 原型链：
-	- 访问一个实例中的方法或者属性，找不到自动去 \_\_proto\_\_ 中查找，直到最后查找到 Object.prototype 中。
+	- 访问一个实例中的方法或者属性，找不到自动去 \_\_proto\_\_ 中查找，直到最后查找到 Object.prototype 中，再找不到就返回 null。
 	- 可以通过 hasOwnPrototype 确定属性或方法是否是实例自身的。
 ```javascript
 let o1 = new Object({
@@ -106,6 +105,25 @@ console.log(obj6.c) // 3
 ## ES5 和 ES6继承方式比较？
 - 在ES5中，继承实质上是子类先创建属于自己的 this，然后再将父类的方法添加到 this（也就是使用 Parent.apply(this)的方式
 - 在ES6中，则是先创建父类的实例对象 this，然后再用子类的构造函数修改 this。
+```javascript
+// 组合式继承
+function SuperType(name) {
+  this.name = name
+}
+SuperType.prototype.sayName = function () {
+  console.log(this.name);
+}
+function SubType(name, age) {
+  // 继承属性
+  SuperType.call(this, name);
+  this.age = age
+}
+// 继承方法
+SubType.prototype = new SuperType();
+SuperType.prototype.sayAge = function () {
+  console.log(this.age);
+}
+```
 
 ## 谈谈对 class 的理解？:star2:
 - 实际 class 是一个语法糖，其底层还是通过原型链去创建的。所以它的绝大部分功能，ES5都可以做到。新的 class 写法只是让对象原型的写法更加清晰、更像面向对象编程的语法而已。

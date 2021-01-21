@@ -78,25 +78,38 @@ const curry = fn => {
 ```javascript
 // 节流
 function throttle(fn, interval = 500) {
+	// 首行设置一个变量
   let timer = null;
-  return (...args) => {
-    if (timer) return false;
-    fn.apply(this, args);
-    timer = setTimeout(() => {
-      clearTimeout(timer);
-      timer = null;
-    }, interval);
-  };
+  return function () {
+    let that = this;
+    let args = arguments;
+		// 定时器如果在执行时，直接返回
+    if (tiemr) {
+      return false
+		}
+    timer = setTimeout(function () {
+			// 调用函数并将定时器更改为false
+      fn.apply(that, args);
+      timer = null
+		}, delay)
+	}
 }
 // 防抖
-function debounce(fn, interval = 500) {
-  let timeout = null;
-  return function () {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      fn.apply(this, arguments);
-    }, interval);
-  };
+function debounce(fn, delay = 500) {
+	// 首行设置一个变量
+	let timer = null;
+	return function () {
+		let that = this;
+		let args = arguments;
+		// 定时器如果在执行时，将定时器销毁
+		if (timer) {
+			clearTimeout(timer);
+		}
+		timer = setTimeout(function() {
+			// 超过一段时间后调用函数
+			fn.apply(that, args);
+		}, delay)
+	};
 }
 ```
 
@@ -119,7 +132,7 @@ function debounce(fn, interval = 500) {
 | 是否支持动态引入  | 不支持 (babel 下可支持) | 支持 |
 | 同/异步   | 异步 | 同步 |
 | 导入方式  | 是值拷贝，导出值变化不会影响导入值 | 是值的引用，导入值会随导出值而变化 |
-| 导出  | 可以导出多个 | 单个值的导出 |
+| 导出方式  | 可以导出多个 | 单个值的导出 |
 | this 指向  | this 是 undefined | this 是当前模块 |
 
 ## Set、Map、WeakSet、WeakMap 之间区别？:star2:
@@ -134,7 +147,8 @@ function debounce(fn, interval = 500) {
 - WeakSet：WeakSet 结构与 Set 类似，也是不重复的值的集合。
 	- 与 Set 不同点1：成员只能是对象，不能是其他类型的值。
 	- 与 Set 不同点2：WeakSet 中对象都是弱引用，所以不能遍历。
-	- 只有 add、delete、has 方法，没有 size、clear。
+	- 与 Set 不同点3：只有 add、delete、has 方法，没有 size、clear。
+	- 与 Set 不同点4：不能进行便利操作。
 - Map：类似于对象，但是 key 值不局限于字符串，可以是各种类型的值。
 	- Map.Prototype.size：返回 Map 结构的成员总数。
 	- set(key, value)：设置 key 对应的键值，然后返回整个 Map 结构。
@@ -143,11 +157,11 @@ function debounce(fn, interval = 500) {
 	- delete(key)：删除某个键，返回 true，删除失败则返回false。
 	- clear()：清除所有成员，没有返回值。
 	- 可以使用 forEach、keys、values、entries 进行遍历。
-- WeakMap：WeakMap 机构与 Map 类似，也用于生成键值对的集合。
+- WeakMap：WeakMap 结构与 Map 类似，也用于生成键值对的集合。
 	- 与 Map 不同点1：WeakMap 只接受对象作为键名，不接受其他类型值作为键名。
 	- 与 Map 不同点2：WeakMap 的键名所指的对象不计入垃圾回收机制。
-	- 只有 set、get、has、delete方法，没有 size、clear。
-	- 不能进行遍历操作。
+	- 与 Map 不同点3：只有 set、get、has、delete方法，没有 size、clear。
+	- 与 Map 不同点4：不能进行遍历操作。
 
 ## 你对 Proxy 的理解？
 - 定义：用于修改某些操作的默认行为，等同于在语言层面作出修改。（实际就是代理，对外界的访问进行过滤和改写）
@@ -193,7 +207,7 @@ function debounce(fn, interval = 500) {
 	- getPrototypeOf(obj)：用于读取对象的 \_\_proto\_\_ 属性，对应 Object.getPrototypeOf(obj)。
 	- isExtensible(target)：对应 Object.isExtensible，返回一个布尔值，表示当前对象是否可扩展。
 	- ownKeys(target)：用于返回对象的所有属性，基本等同于 Object.getOwnPropertyNames 与 Object.getOwnPropertySymbols 之和。
-	- perventExtensions(target)：对应 Object.preventExtensions 方法，用于使一个对象变为不可扩展的。
+	- preventExtensions(target)：对应 Object.preventExtensions 方法，用于使一个对象变为不可扩展的。
 	- setPrototypeOf(obj, newProto)：用于设置对象的 \_\_proto\_\_ 属性，返回第一个参数对象，对应 Object.setPrototypeOf(obj, newProto)。
 
 ## babel 编译原理？

@@ -30,7 +30,7 @@
 	- 定义：用于创建一些不存在文档树中的元素，并为其添加样式，虽然用户可以看到这些内容，但是在实际的文档中并不存在。
 	- 常用包括：before、after、first-letter等。
 
-## em、px、rem 等单位的区别？:star2:
+## px、em、rem 等单位的区别？:star2:
 - px：绝对单位，精确的像素。
 - em：相对单位，如果自身设置了 font-size 时，1em = font-size 的值；自身未设置时为最近祖先元素的 font-size。
 - rem：相对单位，相对于根结点 html 的 font-size。
@@ -67,7 +67,7 @@ position 有以下属性：
 	- display 为 inline-block、flex、table-cell 等。
 - **规则：**
 	- 内部的 box 会在垂直方向上一个一个排列。
-	- 同一个 BFC 的两个相邻元素会发生 margin 重叠。
+	- 同一个 BFC 的两个相邻元素会发生 margin 重叠，两个 BFC 之间不会发生重叠。
 	- BFC 区域不会与浮动元素发生重叠。
 	- 计算 BFC 的高度时，浮动元素也参与计算。
 	- 文字层不会被浮动层覆盖，环绕于周围
