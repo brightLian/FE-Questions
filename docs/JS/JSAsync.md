@@ -12,16 +12,16 @@
 ## 浏览器的事件循环是什么？:star2:
 - 同步代码，一行一行放在调用栈中执行
 - 遇到异步，会先记录下，等待时机
-- 时机到了，就移动到回调队列中（先执行微任务，再执行宏任务）
+- 时机到了，就移动到回调队列中
 - 如果调用栈为空，事件循环机制开始工作
-- 轮询查找回调队列，如果有则移动到调用栈中执行
+- 轮询查找回调队列，如果有则移动到调用栈中执行（先执行微任务，再执行宏任务）
 - 然后继续轮询查找
 
 ## node 的事件循环是什么？:star2:
 - node 也是单线程，相对浏览器多一个微任务 process.nextTick，一个宏任务 setImmediate。
 	- process.nextTick 的回调和 promise 的回调都是微任务，但是 process.nextTick 的回调会比 promise 的先执行
 	- setImmediate 是宏任务，但是和其他宏任务一起执行时得到的结果却是不确定的.
-- **执行阶段：**
+- **执行阶段：** 在同步代码执行完毕后有以下几个阶段。
 	- timers 阶段：执行 setTimeout() 和 setInterval() 的回调函数。
 	- I/O callbacks 阶段：执行延迟到下一个循环的 I/O 回调。（也就是除了 setTimeout、setInterval、setImmediate、socket 的回调函数）
 	- idle、prepare 阶段：仅 libuv 系统内部调用。
@@ -359,7 +359,7 @@ arrs.forEach(async function (item) {
 })();
 ```
 
-## 什么是宏任务和微任务，两者有什么区别？:star2:
+## 宏任务和微任务是什么及二者区别？:star2:
 - 宏任务：
 	- 包括：setTimeout、setInterval、Ajax 和 DOM 事件，以及 node 中的 setImmediate。
 - 微任务：

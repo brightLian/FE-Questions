@@ -33,7 +33,7 @@ XSS 攻击有两大要素是：攻击者提交恶意代码、浏览器执行恶�
   - 如果用 Vue 技术栈，并且不使用 v-html 功能，就在前端 render 阶段避免 innerHTML、outerHTML 的 XSS 隐患。
 - 其他预防方式：
 	- 对于不受信任的输入，都应该限定一个合理的长度。虽然无法完全防止 XSS 发生，但可以增加 XSS 攻击的难度。
-  - HTTP-only Cookie: 禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。
+  - HTTP-Only Cookie: 禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。
   - 使用验证码：防止脚本冒充用户提交危险操作。
  
 ## CSRF 是什么及攻击方式？:star2:

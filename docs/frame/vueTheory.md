@@ -1,6 +1,6 @@
 # Vue 原理
 
-## 如何理解 MVVM 模型？
+## 如何理解 MVVM 模型？:star2:
 - MVVM 模型分为了三层：视图层(V-View 层)、数据层（M-Model 层）、数据视图层（VM-ViewModel 层）     
 	- 数据层：泛指后端进行的各种业务逻辑处理和数据操控，对于前端来说就是后端提供的 api 接口。
   - 视图层：也就是用户界面。前端主要由 HTML 和 CSS 来构建。
@@ -73,7 +73,7 @@ const arrProto = Object.create(oldArrayProperty);
 - 只需要将 nextTick 里的代码放在 DOM 渲染之后执行，就可以访问到新的 DOM 了。
 - 通俗一点就是可以把 nextTick 想像成一个特殊的宏任务，放在了本次事件循环的末尾调用。
 
-## virtual dom 原理实现？:star2:
+## virtual dom 实现原理？:star2:
 - 用 JavaScript 对象模拟真实 DOM 树，对真实 DOM 进行抽象。
 - diff 算法： 比较两棵虚拟 DOM 树的差异。
 - patch 算法：将两个虚拟 DOM 对象的差异应用到真正的 DOM 树上。

@@ -1,5 +1,5 @@
 # webpack 相关知识
-## webpack 中的关键模块？
+## webpack 中的关键模块？:star2:
 - entry：入口文件配置。
 - output：输出文件配置。
 - loader：实现对不同格式的文件处理。（比如将 scss 转换为 css、ES6以上的语法转换为 ES5等）。
@@ -34,7 +34,7 @@ loader 的执行顺序是从后往前的
 - loader 模块转换器。是用来告诉 webpack 如何转化处理某一类型的文件，并且引入到打包出的文件中。
 - plugin 扩展插件。是用来自定义 webpack 打包过程的方式，参与 webpack 打包的整个流程，用于 webpack 功能的扩展。
 
-## webpack 的构建流程？
+## webpack 的构建流程？:star2:
 - 初始化参数：从配置文件和 shell 语句中读取后合并参数，生成最终参数。
 - 开始编译：注册所有的配置插件，让插件能监听到 webpack 整体的构建过程。
 - 确定入口：根据 entry 配置的，找出所有入口文件。
@@ -43,12 +43,12 @@ loader 的执行顺序是从后往前的
 - 输出资源：根据入口和模块之间的依赖关系，组装成包含多个模块的 chunk，再把每个 chunk 转换成单独的文件加入到输出列表。
 - 输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统。
 
-## 什么是 bundle、chunk、module？
+## 什么是 bundle、chunk、module？:star2:
 - bundle：是由 webpack 打包出来的文件，最终输出的文件。
 - chunk：是指 webpack 在进行模块的依赖分析的时候，代码分割出来的代码块。（存在内存中，可能由多个模块合成，entry 生成、import()动态加载、splitChunks 拆分代码块）
 - module：是开发中的单个模块，各个源码文件。
 
-## webpack 如何抽离公共代码？:star2: 
+## webpack 如何抽离公共代码？
 webpack4 之后内置 splitChunks 插件，专门用于抽离公共代码。
 ```javascript
 module.exports = {
@@ -93,13 +93,14 @@ import('./xxx').then(res => {
 WDS 会向 浏览器推送更新，并带上构建时的 hash，让客户端与上一次资源进行对比。 客户端对比出现差异时会向 WDS 发送请求获取更改的内容。
 
 ## webpack 如何优化前端性能？:star2:
-实际就是如何提高 webpack 的构建速度和 webpack 如何优化产出代码，两者结合。
+- 我认为 webpack 优化前端性能应该从两方面考虑：一是提升 webpack 的构建速度；二是优化产出的代码。
+- 结合下面的两个问题。
 
 ## 如何提高 webpack 的构建速度？:star2:
 - 生产环境：
 	- 优化 babel-loader：
   - 开启缓存：cacheDirectory
-	- 明确打包范围：include、exclude
+	- 明确打包范围：利用 include、exclude 过滤掉不需要打包的问天
   - IgnorePlugin：忽略第三方包指定目录，避免某些模块引入
   - noParse：过滤不需要解析的文件
   - happyPack：开启多进程打包（new HappyPack 实例）
@@ -130,7 +131,12 @@ WDS 会向 浏览器推送更新，并带上构建时的 hash，让客户端与�
 	- mode 值为 production
 		- 自动开启代码压缩功能
 		- Vue 会自动删除调试代码，体积更小
-		- mode 为 production 是默认开启 tree-Shaking（ES6 Module 生效，CommonJS 不生效）
+		- mode 为 production 是默认开启 Tree-Shaking（ES6 Module 生效，CommonJS 不生效）
+
+## Tree-Sharking 为什么 ES6Module 生效、CommonJS 不生效？
+- ES6Module 是静态引入，编译时就引入
+- CommonJS 是动态引入，执行时引入
+- 只有 ES6Module 才是静态分析，实现 Tree-Shaking
 
 ## 自动刷新和热更新的区别？
 - 自动刷新：
@@ -145,11 +151,6 @@ WDS 会向 浏览器推送更新，并带上构建时的 hash，让客户端与�
 ## 什么时候开启多进程打包？
 - 项目较大，打包较慢，开启多进程能提高速度。
 - 项目较小，打包很多，开启多进程的时候会降低速度（进程之前需要通信）
-
-## 为什么 ES6Module 生效、CommonJS 不生效？
-- ES6Module 是静态引入，编译时就引入
-- CommonJS 是动态引入，执行时引入
-- 只有 ES6Module 才是静态分析，实现 Tree-Shaking
 
 ## babel 和 webpack 的区别？
 - babel 是新语法编译工具，不关心模块化。

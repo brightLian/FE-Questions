@@ -11,19 +11,18 @@
 - destroyed：实例销毁后调用。
 ![生命周期](/image/lifeCycle.png)  
 
-## Vue 的父组件和子组件生命周期钩子函数执行顺序？
-初始化是从父到子，渲染是从子到父。     
-Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为以下 4 部分：
-- 加载渲染过程：父 beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子 created -> 子 beforeMount -> 子 mounted -> 父 mounted
-- 子组件更新过程：父 beforeUpdate -> 子 beforeUpdate -> 子 updated -> 父 updated
-- 父组件更新过程：父 beforeUpdate -> 父 updated
-- 销毁过程：父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
+## Vue 的父组件和子组件生命周期钩子函数执行顺序？ 
+- Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为以下 4 部分：
+	- 加载渲染过程：父 beforeCreate -> 父 created -> 父 beforeMount -> 子 beforeCreate -> 子 created -> 子 beforeMount -> 子 mounted -> 父 mounted
+	- 子组件更新过程：父 beforeUpdate -> 子 beforeUpdate -> 子 updated -> 父 updated
+	- 父组件更新过程：父 beforeUpdate -> 父 updated
+	- 销毁过程：父 beforeDestroy -> 子 beforeDestroy -> 子 destroyed -> 父 destroyed
 
 ## 在哪个生命周期内调用异步请求？
 - 可以在钩子函数 created、beforeMount、mounted 中进行调用，因为在这三个钩子函数中，data 已经创建，可以将服务端端返回的数据进行赋值。    
-- 但是本人推荐在 created 钩子函数中调用异步请求，因为在 created 钩子函数中调用异步请求有以下优点：
+- 我个人更推荐在 created 钩子函数中调用异步请求，因为在 created 钩子函数中调用异步请求有以下优点：
 	- 能更快获取到服务端数据，减少页面 loading 时间；
-	- 在 mounted 之前获取的数据，子组件中才可以获取到；
+	- 在 mounted 之前获取的数据，子组件只有一次传值；
 	- ssr 不支持 beforeMount 、mounted 钩子函数，所以放在 created 中有助于一致性。
 
 ## 何时使用 beforeDestroy 生命周期？
@@ -36,22 +35,22 @@ Vue 的父组件和子组件生命周期钩子函数执行顺序可以归类为�
 - 父传子：props
 - 子传父：$emit
 - 组件之间的通信：自定义事件、VueX
-	- 自定义事件：event.$on、event.$emit、event.$off（event 是 vue 的实例）
+	- 自定义事件：event.$on、event.$emit、event.$off（event 是 Vue 的实例）
 	- VueX：详见后续章节
 
 ## 在 Vue 中，子组件为何不可以修改父组件传递的 Prop？
 实际就是 Vue 为什么是单向数据流。
 - 原因：
 	- 单向数据流，易于监测数据的流动，出现了错误可以更加迅速的定位到错误发生的位置。
-	- 一个父组件不只有一个子组件。同样，使用这份 prop 数据的也不只有你一个子组件。如果每个子组件都能修改 prop 的话，将会导致修改数据的源头不止一处。
+	- 一个父组件不只有一个子组件，使用这份 prop 数据的也不只有你一个子组件。如果每个子组件都能修改 prop 的话，将会导致修改数据的源头不止一处。
 
 ## v-show 与 v-if 有什么区别？
 - v-if：是真正的条件渲染，切换过程中涉及到了组件的销毁和渲染。v-for 和 v-if 不能一起使用。
-- v-show：通过 CSS 的 display 控制显示和隐藏。
+- v-show：只是通过 CSS 的 display 控制显示和隐藏。
 - 总结：v-if 适用于在运行时很少改变条件，不需要频繁切换条件的场景；v-show 则适用于频繁切换条件的场景。
-- 注：keep-alive 要配合 v-if 一起使用
+- 注：keep-alive 要配合 v-if 一起使用。
 
-## computed 和 watch 的区别和运用的场景？
+## computed 和 watch 的区别和运用的场景？:star2:
 - computed：是计算属性，依赖其它属性值，并且 computed 的值有**缓存**，只有它依赖的属性值发生改变，下一次获取 computed 的值时才会重新计算 computed  的值。
 - watch：更多的是「观察」的作用，类似于某些数据的监听回调 ，每当监听的数据变化时都会执行回调进行后续操作。
 - 运用场景：

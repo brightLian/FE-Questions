@@ -36,8 +36,9 @@ console.log(arr.flat(2));
 ```
 
 ## 手写节流函数？:star2:
+- 节流函数是一种最常用的 高频触发优化方式，能对性能有较大的帮助。
 - 定义：在指定的时间间隔内只会执行一次任务。
-- 应用：适合大量时间按时间平均触发。（如：DOM 元素拖拽、滚动事件、输入联想功能等）
+- 应用：适合大量事件按时间平均触发（如：DOM 元素拖拽、滚动条事件等）
 ```javascript
 function throttle (fn, delay = 500) {
   // 首行设置一个变量
@@ -60,8 +61,9 @@ function throttle (fn, delay = 500) {
 ```
 
 ## 手写防抖函数？:star2:
+- 防抖函数是一种最常用的 高频触发优化方式，能对性能有较大的帮助。
 - 定义：任务频繁触发的情况下，只有任务触发的时间间隔超过指定间隔的时候，任务才会执行。
-- 应用：适合多次事件一次响应。（如：适合防止表单多次提交、输入框结束输入发送请求等）
+- 应用：适合多次事件一次响应。（如：适合防止表单多次提交、输入框连续输入等）
 ```javascript
 // 防抖函数
 function debounce(fn, delay = 500) {
@@ -893,7 +895,7 @@ eventEmitter.emit('article2', 'Javascript 观察者模式');
 eventEmitter.emit('article2', 'Javascript 观察者模式');
 ```
 
-## 使用 proxy 实现简单的数据绑定
+## 使用 proxy 实现简单的数据绑定:star2:
 ```html
 <body>
   hello,world
@@ -926,7 +928,9 @@ model.addEventListener("keyup",function(e){
 })
 ```
 
-## 函数科里化实现
+## 实现函数柯里化？:star2:
+定义：在一个函数中，首先填充几个参数，然后再返回一个新的函数的技术，称为函数的柯里化。    
+作用：函数柯里化的主要作用和特点就是参数复用、提前返回和延迟执行。
 ```javascript
 const curry = fn => {
   if (typeof fn !== "function") {
@@ -943,7 +947,7 @@ const curry = fn => {
 };
 ```
 
-## 用 setTimeout 实现 setInterval
+## 用 setTimeout 实现 setInterval？:star2:
 ```javascript
 function mySetInterval() {
   mySetInterval.timer = setTimeout(() => {

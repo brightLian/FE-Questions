@@ -30,7 +30,7 @@
 	- 定义：用于创建一些不存在文档树中的元素，并为其添加样式，虽然用户可以看到这些内容，但是在实际的文档中并不存在。
 	- 常用包括：before、after、first-letter等。
 
-## px、em、rem 等单位的区别？:star2:
+## px、em、rem 等单位的区别？
 - px：绝对单位，精确的像素。
 - em：相对单位，如果自身设置了 font-size 时，1em = font-size 的值；自身未设置时为最近祖先元素的 font-size。
 - rem：相对单位，相对于根结点 html 的 font-size。
@@ -38,12 +38,16 @@
 - rpx：微信小程序提供的单位，为微信小程序提供了自适应的功能。
 
 ## CSS 的定位方式？
-position 有以下属性：
-- static：正常文档流定位。
-- relative：相对于正常文档流定位。
-- absolute：相对于最近的非 static 元素进行定位。
-- fixed：相对于页面视口的位置进行定位，滚动等操作不会对其造成改变。
-- sticky：粘性定位，当元素在屏幕内是表现为 relative，当元素滚出屏幕时表现为 fixed。
+CSS 可以通过 position 和 float 进行定位。 
+- position 有以下属性：
+	- static：正常文档流定位。
+	- relative：相对于正常文档流定位。
+	- absolute：相对于最近的非 static 元素进行定位。
+	- fixed：相对于页面视口的位置进行定位，滚动等操作不会对其造成改变。
+	- sticky：粘性定位，当元素在屏幕内是表现为 relative，当元素滚出屏幕时表现为 fixed。
+- float 有以下属性：
+	- left：左浮动定位。
+	- right：右浮动定位。
 
 ## 如何理解 z-index？
 - **作用：** 用来控制重叠元素的垂直叠加顺序。
@@ -54,8 +58,8 @@ position 有以下属性：
 - **opacity: 0** 将透明度设为0，元素不可见，占据位置并且可以交互。
 - **visibility: hidden** 元素设置为隐藏，占据位置但是不可交互。
 - **overflow: hidden** 元素超出部分的内容设置为隐藏，占据位置但是不可交互。
-- **display: none** 元素设置为不展示，不占据位置并且不可交互。
 - **transform: scale(0)** 将元素缩放为0，占据位置但是不可交互。
+- **display: none** 元素设置为不展示，不占据位置并且不可交互。
 
 ## BFC 及其应用？:star2:
 - **定义：** 全称为块级格式化上下文，实际是一个独立渲染的区域，这个区域内部元素不会影响边界以外的元素。
@@ -94,7 +98,7 @@ position 有以下属性：
 ```
 
 ## 谈谈你对响应式布局的理解？:star2:
-- 定义：同一个页面在不同尺寸屏幕下有不同的布局。
+- 定义：同一个页面在不同尺寸屏幕下，可以展示特定的布局。
 - 优点：
 	- 面对不同大小屏幕的设备灵活性强。
 	- 能够快速解决多设备显示问题。
@@ -157,23 +161,23 @@ flex 布局的优势在于我们只需要声明布局应该具有的行为，而
 		- text-align: center
 	- 定宽块级元素水平居中：
 		- margin: 0 auto
-		- left: 50% + margin-left: -width/2
+		- position: absolute + left: 50% + margin-left: -width/2
 	- 不定宽块级元素水平居中：
-		- left: 50% + transform: translateX(-50%);
-		- 父元素 display: flex; justify-content: center;
+		- position: absolute + left: 50% + transform: translateX(-50%);
+		- 父元素 display: flex + justify-content: center;
 - 垂直居中：
 	- 行内元素垂直居中：
 		- line-height = height
 	- 定宽块级元素垂直居中：
-		- top: 50% + margin-top: -height/2
+		- position: absolute + top: 50% + margin-top: -height/2
 	- 不定宽块级元素垂直居中：
-		- top: 50% + transform: translateY(-50%);
-		- 父元素 display: flex; align-items: center;
+		- position: absolute + top: 50% + transform: translateY(-50%);
+		- 父元素 display: flex + align-items: center;
 - 水平垂直居中：
 	- 不定宽不定高元素水平垂直居中：
-		- top: 50%; left: 50%; transform: translate(-50%, -50%);
-		- 子元素 position: absolute; top: 0; right:0; bottom:0; left: 0; margin: auto;（万能方式，兼容 IE 版本）
-		- 父元素 display: flex; justify-content: center; align-items: center; 
+		- position: absolute + top: 50%; left: 50%; transform: translate(-50%, -50%);
+		- 子元素 position: absolute + top: 0 + right:0 + bottom:0 + left: 0 + margin: auto;（万能方式，兼容 IE 版本）
+		- 父元素 display: flex + justify-content: center + align-items: center; 
 
 ## 谈谈你对雪碧图的理解？
 - **定义：** 开发人员将多个小的图片合并到一起后称为雪碧图。
@@ -205,7 +209,7 @@ flex 布局的优势在于我们只需要声明布局应该具有的行为，而
 	- rotate：旋转
 	- opacity：透明度
 
-## 介绍 requestAnimationFrame:star2:
+## 介绍下 requestAnimationFrame？:star2:
 功能：用来实现动画持久化。要求浏览器在下次重绘之前调用指定的回调函数更新动画。
 使用方式就是将要被控制频率的代码放入 window.requestAnimationFrame 中。
 - 要想动画流畅，更新频率要60帧/s，即16.67ms 更新一次视图ww
@@ -214,12 +218,12 @@ flex 布局的优势在于我们只需要声明布局应该具有的行为，而
 
 ## 什么是重绘和回流（重排）？:star2:
 - 定义：
-	- 重排：当元素的尺寸、大小、位置等发生变化，浏览器绘重新排列页面，此时浏览器会重新计算并进行布局，对性能损耗较大。（重排一定会触发重绘）
+	- 重排：当元素的尺寸、大小、位置等几何属性发生变化，浏览器绘重新排列页面，此时浏览器会重新计算并进行布局，对性能损耗较大。（重排一定会触发重绘）
 	- 重绘：当元素的颜色、背景等一些不会影响布局等样式发生改变，浏览器会重新绘制元素，此时只需要 UI 层面重新绘制，对性能损耗较小。
 - 触发重排条件：
 	- 页面初次渲染
 	- 浏览器窗口大小改变
-	- 元素等尺寸、大小、位置发生改变
+	- 元素的尺寸、大小、位置发生改变
 	- 添加或删除可见的 DOM 节点
 	- 激活 CSS 的伪类（如 hover、link 等）
 	- 查询某些属性或者调用某些方法（如获取各种高度等）
@@ -228,6 +232,7 @@ flex 布局的优势在于我们只需要声明布局应该具有的行为，而
 	- 将动画效果放在 position 为 absolute 或者 fixed 元素上（使其脱离文档流）
 	- 减少 DOM 的操作次数，合并一起操作。
 	- 避免频繁通过 JS 来操作样式。
+	- 尽量使用 CSS3的一些属性改变样式。
 
 ## 常遇到的 CSS 问题有哪些？
 - 1像素边框问题

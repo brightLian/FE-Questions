@@ -21,10 +21,20 @@
 	- 使用 tool -\> mapRemoteSettings 进行代理 
 - https
 	- 使用 proxy -\> sslProxyingSettings 进行
-	
-## jsBridge 原理是什么？
+
+## 为什么会出现混合开发？
+- web 开发远比 iOS 和 android 更加方便和高效。
+- web 框架远比 iOS 和 android 的各种库和框架方便。
+- web 预览远比 iOS 和 android 的预览高效，客户端需要编译。
+
+## 混合开发的方式？
+- JSBridge：JSBridge 提供了 Native 和 JS 之间的通信桥梁。
+- 原生UI：React Native/Weex 利用 JS 引擎来调用 Native 端组件，从而实现相应的功能。
+- 自绘引擎：不依赖操作系统提供的布局、原生组件的能力，直接调用 GPU 或者底层抽象层进行绘制的渲染引擎，比如 Flutter。
+
+## JSBridge 原理是什么？
 - 定义：JSBridge 是一种 JS 实现的 Bridge，连接着桥两端的 Native 和 H5。
-- 作用：JSBridge 主要提供了 JS 调用 Native 代码的能力，实现原生功能如查看本地相册、打开摄像头、指纹支付等。
+- 作用：JSBridge 主要提供了 JS 调用 Native 代码的能力，实现原生功能如查看本地相册、打开摄像头、指纹支付等，同时也提供了 Native 调用 JS 的能力。
 - JSBridge 的双向通信原理实现：
 	- 拦截 URL Scheme：Web 端通过某种方式（例如 location.href）发送 URL Scheme 请求，之后 Native 拦截到请求并根据 URL SCHEME（包括所带的参数）进行相关操作。
 	- 注入 API：通过 WebView 提供的接口，向 JavaScript 的 Context（window）中注入对象或者方法。让 JavaScript 调用时，直接执行相应的 Native 代码逻辑，达到 JavaScript 调用 Native 的目的。

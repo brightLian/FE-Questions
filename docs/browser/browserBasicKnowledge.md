@@ -62,7 +62,7 @@
   - xhr.withCredentials = true;
 同时服务端的 Access-Control-Allow-Origin 不能设置为 *
 
-## JSONP 原理？为什么不是真正的 ajax？:star2:
+## JSONP 原理？为什么不是真正的 ajax？
 - 原理：静态资源请求不受同源策略限制。通过动态创建 script 标签，基于回调函数。但是只能发送 GET 请求。
 - 为什么不是 ajax：
 	- ajax 的核心是通过 XMLHttpRequest 获取非本页内容。

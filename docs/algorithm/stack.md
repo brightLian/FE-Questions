@@ -8,12 +8,14 @@
 
 ## 题中常用操作
 - 删除指定位置的一个元素 array.splice(index, 1);
+- 删除数组最后 k 位元素 array.splice(-k, k); 
 - 获取数组中指定位置元素 array.slice(index, 1);
 - 删除数组中的第一个元素 array.shift();
 - 删除数组中的最后一个元素 array.pop();
 - 获取一个数组中的最大值 Math.max(...arr);
 - 获取一个数组中的最小值 Math.min(...arr);
 - 获取数组最后一个元素 array.slice(-1);
+- 获取数组最后 k 位元素 array.slice(-k, k);
 - 获取字符串最后一个元素 string.substr(string.length-1,1);
 - 字符串转为数组 string.split('');
 - 数组转为字符串 array.join('');
