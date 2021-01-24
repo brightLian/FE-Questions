@@ -27,6 +27,10 @@
 ## pm2相关学习
 
 ## 使用 Express 主要用来做什么？:star2:
+- 提供页面的路由
+- 充当 controller 进行数据聚合
+- 前端报警监控，sentry 中间件
+- 写一些拦截器 interceptor
 
 ## cluster 模块使用
 

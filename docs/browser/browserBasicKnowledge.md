@@ -10,7 +10,7 @@
 	- TCP 连接的建立需要进行三次握手
 - 浏览器根据 ip 地址向服务器发起 http 请求。
 	- 在发起请求之前先判断强缓存是否过期，未过期直接使用，不发起请求
-- 服务器处理请求，并返回给浏览器。
+- 服务器处理请求，返回相关信息给浏览器。
 	- 服务器接受请求后，先判断资源是否被重定向
 	- 再判断请求中的信息是否命中协商缓存
 	- 命中协商缓存后返回304状态码，没有命中则返回新的资源信息以及缓存标识
@@ -59,8 +59,8 @@
 	- Access-Control-Allow-Methods: *
 	- Access-Control-Allow-Headers: \["Content-Type", "Authorization", "Accept"\]
 - 前端需要在请求时设置
-  - xhr.withCredentials = true;
-同时服务端的 Access-Control-Allow-Origin 不能设置为 *
+	- xhr.withCredentials = true;
+	- 同时服务端的 Access-Control-Allow-Origin 不能设置为 *
 
 ## JSONP 原理？为什么不是真正的 ajax？
 - 原理：静态资源请求不受同源策略限制。通过动态创建 script 标签，基于回调函数。但是只能发送 GET 请求。

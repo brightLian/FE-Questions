@@ -106,13 +106,21 @@ Array.isArray(arr1); // true
 })
 ```
 
-## == 和 === 的使用情况？
+## ==、=== 和  Object.is() 的使用情况？
 - 区别：
 	- ==：相等返回true，不相等返回false；允许不同数据类型之间的比较。
 	- ===：只要数据类型不一样，就返回false。
+	- Object.is()：与 === 行为基本一致，但是有两处不同。
 - 使用：
 	- ==：只有在判断变量是否为 null 或 undefined 时使用。
 	- ===：除上述外都推荐使用这种方式。
+```javascript
++0 === -0 // true
+NaN === NaN // false
+
+Object.is(+0, -0) // false
+Object(NaN, NaN) // true
+```
 
 ## 隐式类型转换会在那里出现？
 - 字符串拼接

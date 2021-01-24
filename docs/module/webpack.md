@@ -3,7 +3,7 @@
 - entry：入口文件配置。
 - output：输出文件配置。
 - loader：实现对不同格式的文件处理。（比如将 scss 转换为 css、ES6以上的语法转换为 ES5等）。
-- plugins：用于解决 loader 不能解决的事情，着眼于功能上的处理，使 webpack 更灵活。
+- plugins：用于解决 loader 不能解决的事情，扩展 webpack 的功能，使 webpack 更灵活。
 
 ## webpack 中常见的 loader 有哪些？:star2:
 - babel-loader：加载 ES2015+ 代码，然后使用 Babel 转译为 ES5。
@@ -98,17 +98,16 @@ WDS 会向 浏览器推送更新，并带上构建时的 hash，让客户端与�
 
 ## 如何提高 webpack 的构建速度？:star2:
 - 生产环境：
-	- 优化 babel-loader：
-  - 开启缓存：cacheDirectory
-	- 明确打包范围：利用 include、exclude 过滤掉不需要打包的问天
+	- 开启缓存：cacheDirectory
+	- noParse：过滤不需要解析的文件
+	-	明确打包范围：利用 include、exclude 过滤掉不需要打包的文件
   - IgnorePlugin：忽略第三方包指定目录，避免某些模块引入
-  - noParse：过滤不需要解析的文件
-  - happyPack：开启多进程打包（new HappyPack 实例）
-  - ParallelUglifyPlugin：多进程压缩 JS 
+  - happyPack：开启多进程打包（小项目不要用，进程之间的通信会拖慢速度）
+  - ParallelUglifyPlugin：多进程压缩 JS
 	- DllPlugin + DllReferencePlugin：拆分 bundle，提升构建速度
 		- DllPlugin：打包出 dll 文件
 		- DllReferencePlugin：使用 dll 文件，配置 dll 文件映射地址
-	- hard-source-webpack-plugin：代替 dll，打包加速更明显。
+  - hard-source-webpack-plugin：代替 dll，打包加速更明显
 - 开发环境：
 	- 自动刷新：通过 webpack-dev-server 开启服务时会默认开启（整个网页全部刷新，速度较慢）
 	- 热更新：通过 HotModuleReplacementPlugin 配置。
@@ -136,7 +135,7 @@ WDS 会向 浏览器推送更新，并带上构建时的 hash，让客户端与�
 ## Tree-Sharking 为什么 ES6Module 生效、CommonJS 不生效？
 - ES6Module 是静态引入，编译时就引入
 - CommonJS 是动态引入，执行时引入
-- 只有 ES6Module 才是静态分析，实现 Tree-Shaking
+- webpack 是静态分析的，使用 ES6Module 是静态引入的，才能实现 Tree-Shaking
 
 ## 自动刷新和热更新的区别？
 - 自动刷新：

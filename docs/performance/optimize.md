@@ -14,13 +14,12 @@
 	- 使用服务端渲染：数据预先填充到页面，客户端直接渲染页面。
 	- 静态资源使用 CDN：减少资源请求的延迟。
 	- 压缩资源体积：我个人是使用 webpack 及一些插件进行压缩。
-		- commons-chunk-plugin：提取公共代码
 		- uglifyjs-webpack-plugin：压缩代码
 		- mini-css-extract-plugin： 提取 CSS 到单独到文件
 		- 使用 webpack 抽离公共代码（splitChunks）
 		- 使用 compression-webpack-plugin 开启 gzip 压缩
 - 让页面渲染的更快，优化页面渲染的过程
-	- CSS 放在文件头部，JS 放在文件底部：CSS 不会阻塞 DOM解析，可以让用户先看到页面的样式。
+	- CSS 放在文件头部，JS 放在文件底部：CSS 不会阻塞 DOM 解析，可以让用户先看到页面的样式。
 	- 图片懒加载：图片不再可视区域先给不给图片设置路径，图片到达可视区域时才去加载真正的图片。
 	- 避免页面过多的重排和重绘
 	- 尽早执行 JS，用 DOMContentLoaded 触发
